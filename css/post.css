@@ -1,0 +1,47 @@
+body { font-size: 15px; line-height: 1.8; }
+
+.post-wrap { max-width: 680px; margin: 0 auto; padding: 3.5rem 2rem 6rem; }
+
+.post-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--border2); }
+.post-header .post-meta { margin-bottom: 1rem; }
+.post-title { font-size: 26px; font-weight: 700; line-height: 1.35; margin-bottom: .75rem; letter-spacing: -0.02em; }
+.post-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+.post-tags { margin-top: 1rem; }
+
+.post-body h2 { font-size: 20px; font-weight: 700; margin: 2.5rem 0 1rem; padding-bottom: .5rem; border-bottom: 0.5px solid var(--border2); }
+.post-body h3 { font-size: 16px; font-weight: 500; margin: 2rem 0 .75rem; color: var(--accent); }
+.post-body p { margin-bottom: 1.25rem; }
+.post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.post-body li { margin-bottom: .4rem; line-height: 1.75; }
+.post-body code {
+  font-family: var(--mono); font-size: 13px;
+  background: var(--bg3); padding: 2px 6px; border-radius: 4px;
+  color: var(--accent);
+}
+.post-body pre {
+  background: #1a1a1a; border-radius: 8px;
+  padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.post-body pre code { background: none; color: #e8e8e8; padding: 0; font-size: 13px; line-height: 1.7; }
+.post-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: .75rem 1.25rem; margin: 1.5rem 0;
+  background: var(--accent-bg); border-radius: 0 8px 8px 0;
+  font-size: 14px; color: var(--accent-text); line-height: 1.75;
+}
+.post-body img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+.post-body strong { font-weight: 700; }
+.post-body hr { border: none; border-top: 0.5px solid var(--border2); margin: 2.5rem 0; }
+
+.callout {
+  background: var(--bg3); border-radius: 8px;
+  padding: 1rem 1.25rem; margin: 1.5rem 0;
+  font-size: 13px; color: var(--muted); line-height: 1.7;
+}
+.callout strong { color: var(--text); }
+
+.ad-slot { margin: 2rem 0; }
+
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 2rem; transition: color .15s; }
+.back-link:hover { color: var(--text); }
