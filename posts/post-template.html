@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글 제목 — ssstar.log</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fafaf8; --bg2: #ffffff; --bg3: #f3f2ef;
+    --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.13);
+    --text: #1a1a1a; --muted: #888; --muted2: #aaa;
+    --accent: #5046e4; --accent-bg: #f0effe; --accent-text: #3730a3;
+    --teal-bg: #e1f5ee; --teal-text: #085041;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.8; }
+  a { text-decoration: none; color: inherit; }
+  nav {
+    background: rgba(250,250,248,0.93); backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border2);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+    height: 54px; position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: var(--mono); font-size: 15px; font-weight: 500; }
+  .nav-logo em { color: var(--accent); font-style: normal; }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { color: var(--muted); font-size: 13px; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .post-wrap { max-width: 680px; margin: 0 auto; padding: 3.5rem 2rem 6rem; }
+
+  .post-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 0.5px solid var(--border2); }
+  .post-meta { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+  .cat-badge { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+  .cat-ux { background: var(--accent-bg); color: var(--accent-text); }
+  .cat-a11y { background: var(--teal-bg); color: var(--teal-text); }
+  .cat-plan { background: #faeeda; color: #633806; }
+  .cat-front { background: #f0f9ff; color: #075985; }
+  .cat-story { background: #fdf2f8; color: #86198f; }
+  .post-date { font-size: 11px; color: var(--muted2); font-family: var(--mono); }
+  .post-title { font-size: 26px; font-weight: 700; line-height: 1.35; margin-bottom: .75rem; letter-spacing: -0.02em; }
+  .post-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+  .post-tags { display: flex; gap: 6px; margin-top: 1rem; flex-wrap: wrap; }
+  .tag { font-size: 11px; color: var(--muted); background: var(--bg3); padding: 2px 7px; border-radius: 4px; }
+
+  /* 본문 스타일 */
+  .post-body h2 { font-size: 20px; font-weight: 700; margin: 2.5rem 0 1rem; padding-bottom: .5rem; border-bottom: 0.5px solid var(--border2); }
+  .post-body h3 { font-size: 16px; font-weight: 500; margin: 2rem 0 .75rem; color: var(--accent); }
+  .post-body p { margin-bottom: 1.25rem; }
+  .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+  .post-body li { margin-bottom: .4rem; line-height: 1.75; }
+  .post-body code {
+    font-family: var(--mono); font-size: 13px;
+    background: var(--bg3); padding: 2px 6px; border-radius: 4px;
+    color: var(--accent);
+  }
+  .post-body pre {
+    background: #1a1a1a; border-radius: 8px;
+    padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  .post-body pre code { background: none; color: #e8e8e8; padding: 0; font-size: 13px; line-height: 1.7; }
+  .post-body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: .75rem 1.25rem; margin: 1.5rem 0;
+    background: var(--accent-bg); border-radius: 0 8px 8px 0;
+    font-size: 14px; color: var(--accent-text); line-height: 1.75;
+  }
+  .post-body img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+  .post-body strong { font-weight: 700; }
+  .post-body hr { border: none; border-top: 0.5px solid var(--border2); margin: 2.5rem 0; }
+
+  .callout {
+    background: var(--bg3); border-radius: 8px;
+    padding: 1rem 1.25rem; margin: 1.5rem 0;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .callout strong { color: var(--text); }
+
+  /* 광고 슬롯 */
+  .ad-slot {
+    background: var(--bg3); border: 0.5px dashed var(--border2);
+    border-radius: 8px; padding: .9rem; text-align: center;
+    font-size: 11px; color: var(--muted2); font-family: var(--mono);
+    margin: 2rem 0;
+  }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 2rem; transition: color .15s; }
+  .back-link:hover { color: var(--text); }
+
+  footer { border-top: 0.5px solid var(--border2); padding: 2rem; text-align: center; font-size: 12px; color: var(--muted2); font-family: var(--mono); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">✦ <em>ssstar</em>.log</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">홈</a></li>
+    <li><a href="../posts.html">포스팅</a></li>
+    <li><a href="../portfolio.html">포트폴리오</a></li>
+    <li><a href="../about.html">소개</a></li>
+  </ul>
+</nav>
+
+<div class="post-wrap">
+  <a class="back-link" href="../posts.html">← 목록으로</a>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <!-- 카테고리 뱃지: cat-ux / cat-a11y / cat-plan / cat-front / cat-story 중 선택 -->
+      <span class="cat-badge cat-story">이직 기록</span>
+      <span class="post-date">2025.05.14</span>
+    </div>
+    <h1 class="post-title">글 제목을 여기에 씁니다</h1>
+    <p class="post-desc">한 줄 요약 설명을 여기에 씁니다. 포스팅 목록에서도 이 텍스트가 보입니다.</p>
+    <div class="post-tags">
+      <span class="tag">#태그1</span>
+      <span class="tag">#태그2</span>
+    </div>
+  </div>
+
+  <!-- 광고 (본문 위) -->
+  <div class="ad-slot">Google AdSense 광고 슬롯</div>
+
+  <!-- 본문 시작 -->
+  <div class="post-body">
+
+    <p>첫 번째 단락을 여기에 씁니다. 글의 도입부입니다.</p>
+
+    <h2>소제목 1</h2>
+    <p>내용을 여기에 씁니다.</p>
+
+    <blockquote>
+      인용구나 핵심 문장을 강조할 때 사용합니다.
+    </blockquote>
+
+    <h2>소제목 2</h2>
+    <p>내용을 여기에 씁니다.</p>
+
+    <ul>
+      <li>목록 항목 1</li>
+      <li>목록 항목 2</li>
+      <li>목록 항목 3</li>
+    </ul>
+
+    <div class="callout">
+      <strong>참고:</strong> 보충 설명이나 주의사항을 callout으로 강조할 수 있습니다.
+    </div>
+
+    <h3>코드 예시</h3>
+    <pre><code>// 코드는 이렇게 씁니다
+const example = 'hello ssstar';</code></pre>
+
+    <hr>
+
+    <h2>마치며</h2>
+    <p>마무리 글을 여기에 씁니다.</p>
+
+  </div>
+  <!-- 본문 끝 -->
+
+  <!-- 광고 (본문 아래) -->
+  <div class="ad-slot">Google AdSense 광고 슬롯</div>
+
+</div>
+
+<footer>© 2025 ssstar.log — made with ✦</footer>
+</body>
+</html>
