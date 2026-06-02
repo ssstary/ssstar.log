@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기획서에서 놓치기 쉬운 웹접근성 체크리스트 — ssstar.log</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/post.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">✦ <em>ssstar</em>.log</a>
+</nav>
+
+<div class="post-wrap">
+  <a class="back-link" href="../posts.html">← 목록으로</a>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span class="cat-badge cat-a11y">웹접근성</span>
+      <span class="post-date">2025.05.10</span>
+      <span class="post-read">· 약 5분</span>
+    </div>
+    <h1 class="post-title">기획서에서 놓치기 쉬운 웹접근성 체크리스트</h1>
+    <p class="post-desc">퍼블리셔로 일하며 직접 겪은 접근성 이슈들을 기획 단계에서 잡는 방법을 정리했습니다.</p>
+    <div class="post-tags">
+      <span class="tag">#웹접근성</span>
+      <span class="tag">#WAI-ARIA</span>
+      <span class="tag">#기획</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <p>퍼블리셔로 일하다 보면 비슷한 패턴의 접근성 수정 요청을 반복해서 받게 됩니다. 이미지에 alt 텍스트가 없거나, 버튼에 레이블이 없거나, 색상만으로 상태를 구분한 경우들이죠.</p>
+    <p>이 이슈들의 공통점은 하나입니다. <strong>기획 단계에서 명세가 없었다.</strong> 개발이 완료된 후 발견되면 수정 비용이 몇 배로 커집니다. 기획서에서 미리 챙기면 해결할 수 있는 것들을 정리했습니다.</p>
+
+    <h2>1. 이미지 대체 텍스트 명세</h2>
+    <p>기획서에 이미지를 넣을 때 "배너 이미지" 한 줄로 끝내는 경우가 많습니다. 하지만 퍼블리셔와 개발자 입장에서는 이 이미지가 <strong>의미 있는 이미지인지, 장식용 이미지인지</strong>를 알 수 없습니다.</p>
+
+    <div class="callout">
+      <strong>기획서에 명시해야 할 것:</strong> "이 이미지는 ○○을 설명하는 이미지입니다. 대체 텍스트: [실제 텍스트 내용]" 또는 "배경 장식용 이미지, alt 불필요"
+    </div>
+
+    <p>의미 있는 이미지라면 alt에 어떤 내용이 들어가야 하는지까지 기획서에 있어야 합니다. 퍼블리셔가 임의로 작성하면 맥락이 맞지 않는 경우가 생깁니다.</p>
+
+    <h2>2. 포커스 순서와 키보드 이동 경로</h2>
+    <p>모달 팝업, 드롭다운, 탭 컴포넌트를 기획할 때 마우스 기준으로만 UX 플로우를 그리는 경우가 많습니다. 하지만 키보드 사용자는 Tab 키로 이동하기 때문에 <strong>포커스가 어디서 시작해서 어디로 가야 하는지</strong>를 명세해야 합니다.</p>
+
+    <ul>
+      <li>모달 열릴 때: 포커스가 모달 내부 첫 번째 요소로 이동</li>
+      <li>모달 닫힐 때: 포커스가 모달을 열었던 버튼으로 복귀</li>
+      <li>모달 내부: Tab이 모달 밖으로 나가지 않도록 포커스 트랩</li>
+    </ul>
+
+    <p>이 내용이 기획서에 없으면 퍼블리셔가 구현할 때 빠뜨리기 쉽고, QA에서 발견되면 다시 수정 사이클이 돌아갑니다.</p>
+
+    <h2>3. 동적 콘텐츠 변경 안내</h2>
+    <p>필터를 선택하면 목록이 바뀐다, 탭을 누르면 콘텐츠 영역이 교체된다 — 이런 동적 변경은 시각적으로는 명확하지만 스크린리더 사용자에게는 변경이 일어났다는 사실을 알 수 없습니다.</p>
+
+    <blockquote>
+      화면이 바뀌었을 때, 스크린리더 사용자에게도 "바뀌었습니다"를 알려줘야 한다.
+    </blockquote>
+
+    <p>기획서에 동적 변경이 있는 컴포넌트가 있다면 <strong>"상태 변경 시 스크린리더 안내 필요"</strong>를 명시하고, 어떤 텍스트로 안내할지까지 정해두면 퍼블리셔가 <code>aria-live</code>나 <code>role="alert"</code>를 적절히 적용할 수 있습니다.</p>
+
+    <h2>4. 색상만으로 정보 전달하지 않기</h2>
+    <p>폼 유효성 검사에서 빨간색 = 오류, 초록색 = 성공으로만 표시하는 경우가 많습니다. 색각 이상 사용자나 고대비 모드 사용자에게는 색상이 전달되지 않습니다.</p>
+
+    <div class="callout">
+      <strong>체크 포인트:</strong> 색상 외에도 아이콘, 텍스트, 테두리 등 시각적 단서를 하나 이상 함께 사용하고 있는가?
+    </div>
+
+    <h2>5. 버튼과 링크의 레이블</h2>
+    <p>"X" 버튼, 화살표 아이콘 버튼, 아이콘만 있는 SNS 링크는 시각적으로는 의미가 명확하지만, 스크린리더는 "버튼"이라고만 읽습니다. 기획서에 이런 요소가 있다면 <strong>숨김 텍스트(레이블)가 무엇이어야 하는지</strong>를 반드시 명세해야 합니다.</p>
+
+    <hr>
+
+    <h2>마치며 — 기획자가 접근성을 알아야 하는 이유</h2>
+    <p>이 체크리스트는 퍼블리셔 시절 반복해서 수정하면서 정리한 것들입니다. 기획 단계에서 이 항목들이 명세되어 있었다면 수정 없이 바로 구현할 수 있었을 것들입니다.</p>
+    <p>접근성은 퍼블리셔나 개발자만의 영역이 아닙니다. 기획서에서 이미 결정이 나 있어야 하는 것들이 많습니다. 이걸 아는 기획자와 모르는 기획자가 만드는 서비스의 품질은 다릅니다.</p>
+
+  </div>
+</div>
+
+<footer>© 2025 ssstar.log — made with ✦</footer>
+</body>
+</html>

@@ -1,0 +1,460 @@
+/* ═══════════════════════════════════════
+   StaryOS — os.js
+═══════════════════════════════════════ */
+
+'use strict';
+
+/* ─── Stars (canvas background) ─── */
+function initStars() {
+  const canvas = document.getElementById('starsCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 140; i++) {
+    stars.push({
+      x:     Math.random() * W,
+      y:     Math.random() * H,
+      r:     Math.random() * 1.1 + 0.2,
+      base:  Math.random() * 0.45 + 0.08,
+      phase: Math.random() * Math.PI * 2,
+      freq:  Math.random() * 0.6 + 0.2,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const t = performance.now() * 0.001;
+    stars.forEach(s => {
+      const a = s.base * (0.5 + 0.5 * Math.sin(t * s.freq + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(212,226,244,${a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/* ─── Clock ─── */
+function initClock() {
+  const timeEl = document.getElementById('tbTime');
+  const dateEl = document.getElementById('tbDate');
+  if (!timeEl) return;
+
+  function tick() {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const yy = now.getFullYear();
+    const mo = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    timeEl.textContent = `${hh}:${mm}`;
+    dateEl.textContent = `${yy}.${mo}.${dd}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ─── Terminal typewriter ─── */
+const TERM_SCRIPT = [
+  { type: 'prompt', cmd: 'whoami' },
+  { type: 'out',    text: 'ssstar  —  Web Publisher → Planner' },
+  { type: 'blank' },
+  { type: 'prompt', cmd: 'cat profile.txt' },
+  { type: 'out',    text: 'Name    ssstar' },
+  { type: 'out',    text: 'Role    예비 웹기획자' },
+  { type: 'out',    text: 'BG      웹 퍼블리셔 출신' },
+  { type: 'out',    text: 'Focus   UX 기획 / 웹접근성 / IA 설계' },
+  { type: 'out',    text: 'Mail    yoonssstar@gmail.com' },
+  { type: 'blank' },
+  { type: 'prompt', cmd: 'ls skills/' },
+  { type: 'out',    text: 'UX흐름설계  정보구조(IA)  웹접근성  WAI-ARIA' },
+  { type: 'out',    text: 'HTML/CSS    JavaScript    Figma     Git' },
+  { type: 'blank' },
+  { type: 'cursor' },
+];
+
+function runTerminal() {
+  const body = document.getElementById('terminalBody');
+  if (!body || body.dataset.played === 'true') return;
+  body.dataset.played = 'true';
+  body.innerHTML = '';
+  body.innerHTML = '';
+
+  let i = 0;
+  const HOST = '<span class="term-prompt">ssstar</span>'
+             + '<span style="color:var(--muted)">@staryos</span>'
+             + '<span style="color:var(--muted)">:~$</span> ';
+
+  function nextLine() {
+    if (i >= TERM_SCRIPT.length) return;
+    const step = TERM_SCRIPT[i++];
+    const div = document.createElement('div');
+    div.className = 'term-line';
+
+    if (step.type === 'blank') {
+      div.className = 'term-blank';
+      body.appendChild(div);
+      setTimeout(nextLine, 120);
+    } else if (step.type === 'prompt') {
+      div.innerHTML = HOST + '<span class="term-cmd"></span>';
+      body.appendChild(div);
+      typeCmd(div.querySelector('.term-cmd'), step.cmd, () => {
+        setTimeout(nextLine, 200);
+      });
+    } else if (step.type === 'out') {
+      div.innerHTML = `<span class="term-out">${step.text}</span>`;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+      setTimeout(nextLine, 80);
+    } else if (step.type === 'cursor') {
+      div.innerHTML = HOST + '<span class="term-cursor"></span>';
+      body.appendChild(div);
+    }
+  }
+
+  function typeCmd(el, text, cb) {
+    let j = 0;
+    const id = setInterval(() => {
+      el.textContent += text[j++];
+      if (j >= text.length) { clearInterval(id); cb(); }
+    }, 38);
+  }
+
+  setTimeout(nextLine, 300);
+}
+
+/* ─── OS Window Manager ─── */
+class StaryOS {
+  constructor() {
+    this.wins    = {};  // { id: { el, open, minimized, savedGeom } }
+    this.topZ    = 10;
+    this.init();
+  }
+
+  init() {
+    this.registerWindows();
+    this.initDesktopIcons();
+    this.initMobileIcons();
+    this.initTaskbar();
+    this.initStartPanel();
+    initClock();
+    initStars();
+    this.boot();
+  }
+
+  /* ── Boot sequence ── */
+  boot() {
+    const screen = document.getElementById('bootScreen');
+    const fill   = document.getElementById('bootFill');
+    const status = document.getElementById('bootStatus');
+    if (!screen) return;
+
+    const steps = [
+      { p: 20,  msg: 'loading components...' },
+      { p: 55,  msg: 'rendering stars...' },
+      { p: 80,  msg: 'starting services...' },
+      { p: 100, msg: 'welcome, ssstar ✦' },
+    ];
+    let i = 0;
+    const run = () => {
+      if (i >= steps.length) {
+        setTimeout(() => {
+          screen.classList.add('done');
+          setTimeout(() => { screen.remove(); }, 600);
+        }, 400);
+        return;
+      }
+      const s = steps[i++];
+      fill.style.width   = s.p + '%';
+      status.textContent = s.msg;
+      setTimeout(run, i === steps.length ? 300 : 320);
+    };
+    setTimeout(run, 200);
+  }
+
+  /* ── Register all .win elements ── */
+  registerWindows() {
+    document.querySelectorAll('.win').forEach(el => {
+      const id = el.id.replace('win-', '');
+      this.wins[id] = { el, open: false, minimized: false, savedGeom: null };
+
+      /* Drag */
+      const handle = el.querySelector('[data-handle]');
+      if (handle) this.makeDraggable(el, handle);
+
+      /* Focus on click */
+      el.addEventListener('mousedown', () => this.focus(id), true);
+
+      /* Window control buttons */
+      el.querySelectorAll('.win-dot').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const act = btn.dataset.action;
+          if (act === 'close') this.close(id);
+          if (act === 'min')   this.minimize(id);
+          if (act === 'max')   this.toggleMax(id);
+        });
+      });
+    });
+  }
+
+  /* ── Open window ── */
+  open(id) {
+    const w = this.wins[id];
+    if (!w) return;
+    w.el.classList.add('active');
+    w.el.classList.remove('minimized', 'maximized');
+    w.open      = true;
+    w.minimized = false;
+    this.resetWindow(id);
+    this.focus(id);
+    this.setTaskbarBtn(id, true);
+    if (id === 'terminal') runTerminal();
+  }
+
+  /* ── Reset window state on every open ── */
+  resetWindow(id) {
+    const w = this.wins[id];
+    if (!w) return;
+
+    /* Scroll to top */
+    const body = w.el.querySelector('.win-body');
+    if (body) body.scrollTop = 0;
+
+    /* Terminal: clear & allow replay */
+    if (id === 'terminal') {
+      const tb = document.getElementById('terminalBody');
+      if (tb) { tb.innerHTML = ''; tb.dataset.played = 'false'; }
+    }
+
+    /* Custom event — future components listen here */
+    w.el.dispatchEvent(new CustomEvent('staryos:open', { bubbles: false }));
+  }
+
+  /* ── Close window ── */
+  close(id) {
+    const w = this.wins[id];
+    if (!w) return;
+    w.el.classList.remove('active', 'minimized', 'maximized');
+    w.open      = false;
+    w.minimized = false;
+    this.setTaskbarBtn(id, false);
+  }
+
+  /* ── Minimize window ── */
+  minimize(id) {
+    const w = this.wins[id];
+    if (!w || !w.open) return;
+    w.el.classList.add('minimized');
+    w.minimized = true;
+    this.setTaskbarBtn(id, true, true);
+  }
+
+  /* ── Restore minimized window ── */
+  restore(id) {
+    const w = this.wins[id];
+    if (!w) return;
+    w.el.classList.remove('minimized');
+    w.minimized = false;
+    this.focus(id);
+    this.setTaskbarBtn(id, true, false);
+  }
+
+  /* ── Toggle maximize ── */
+  toggleMax(id) {
+    const w = this.wins[id];
+    if (!w) return;
+    const el  = w.el;
+    const isMx = el.classList.contains('maximized');
+
+    if (isMx) {
+      /* Restore */
+      const g = w.savedGeom;
+      if (g) {
+        el.style.width  = g.width;
+        el.style.height = g.height;
+        el.style.top    = g.top;
+        el.style.left   = g.left;
+      }
+      el.classList.remove('maximized');
+    } else {
+      /* Save current geometry */
+      w.savedGeom = {
+        width:  el.style.width  || el.offsetWidth  + 'px',
+        height: el.style.height || el.offsetHeight + 'px',
+        top:    el.style.top    || el.offsetTop    + 'px',
+        left:   el.style.left   || el.offsetLeft   + 'px',
+      };
+      el.classList.add('maximized');
+    }
+  }
+
+  /* ── Bring to front ── */
+  focus(id) {
+    this.topZ++;
+    const w = this.wins[id];
+    if (w) w.el.style.zIndex = this.topZ;
+  }
+
+  /* ── Update taskbar button state ── */
+  setTaskbarBtn(id, running, minimized = false) {
+    const btn = document.querySelector(`.tb-app[data-win="${id}"]`);
+    if (!btn) return;
+    btn.classList.toggle('running',   running && !minimized);
+    btn.classList.toggle('minimized', running &&  minimized);
+  }
+
+  /* ── Desktop icons (PC) ── */
+  initDesktopIcons() {
+    document.querySelectorAll('.d-icon').forEach(icon => {
+      /* Single click → select */
+      icon.addEventListener('click', () => {
+        document.querySelectorAll('.d-icon').forEach(i => i.classList.remove('sel'));
+        icon.classList.add('sel');
+      });
+      /* Double click → open window */
+      icon.addEventListener('dblclick', () => {
+        const id = icon.dataset.win;
+        const w  = this.wins[id];
+        if (w && w.open && !w.minimized) {
+          this.focus(id);
+        } else if (w && w.minimized) {
+          this.restore(id);
+        } else {
+          this.open(id);
+        }
+      });
+    });
+
+    /* Click on blank desktop → deselect icons */
+    document.getElementById('osDesktop')?.addEventListener('click', e => {
+      if (!e.target.closest('.d-icon, .win, .taskbar')) {
+        document.querySelectorAll('.d-icon').forEach(i => i.classList.remove('sel'));
+      }
+    });
+  }
+
+  /* ── Mobile icon grid ── */
+  initMobileIcons() {
+    document.querySelectorAll('.m-icon').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const id = icon.dataset.win;
+        const w  = this.wins[id];
+        if (w && w.open && !w.minimized) {
+          this.focus(id);
+        } else {
+          this.open(id);
+        }
+      });
+    });
+  }
+
+  /* ── Taskbar buttons ── */
+  initTaskbar() {
+    document.querySelectorAll('.tb-app').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.win;
+        const w  = this.wins[id];
+        if (!w) return;
+
+        if (!w.open) {
+          this.open(id);
+        } else if (w.minimized) {
+          this.restore(id);
+        } else {
+          /* Already visible → minimize */
+          this.minimize(id);
+        }
+      });
+    });
+  }
+
+  /* ── Start Panel (✦ button) ── */
+  initStartPanel() {
+    const btn   = document.querySelector('.tb-start');
+    const panel = document.getElementById('startPanel');
+    const close = document.getElementById('spClose');
+    if (!btn || !panel) return;
+
+    const toggle = (e) => {
+      e.stopPropagation();
+      panel.classList.toggle('open');
+    };
+    const hide = (e) => {
+      if (!panel.contains(e.target) && e.target !== btn) {
+        panel.classList.remove('open');
+      }
+    };
+
+    btn.addEventListener('click', toggle);
+    close?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      panel.classList.remove('open');
+    });
+    document.addEventListener('click', hide);
+
+    /* ESC to close */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') panel.classList.remove('open');
+    });
+  }
+
+  /* ── Drag (mouse + touch) ── */
+  makeDraggable(win, handle) {
+    let dragging = false, sx, sy, sl, st;
+
+    const start = (cx, cy) => {
+      if (win.classList.contains('maximized')) return;
+      dragging = true;
+      sx = cx; sy = cy;
+      sl = win.offsetLeft;
+      st = win.offsetTop;
+    };
+    const move = (cx, cy) => {
+      if (!dragging) return;
+      const dx = cx - sx, dy = cy - sy;
+      const maxL = window.innerWidth  - 60;
+      const maxT = window.innerHeight - 60;
+      win.style.left = Math.min(maxL, Math.max(-win.offsetWidth + 60, sl + dx)) + 'px';
+      win.style.top  = Math.min(maxT, Math.max(0,                     st + dy)) + 'px';
+    };
+    const end = () => { dragging = false; };
+
+    /* Mouse */
+    handle.addEventListener('mousedown', e => {
+      if (e.target.closest('.win-dot')) return;
+      start(e.clientX, e.clientY);
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+    document.addEventListener('mouseup',   end);
+
+    /* Touch */
+    handle.addEventListener('touchstart', e => {
+      if (e.target.closest('.win-dot')) return;
+      const t = e.touches[0];
+      start(t.clientX, t.clientY);
+    }, { passive: true });
+    handle.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      move(t.clientX, t.clientY);
+      e.preventDefault();
+    }, { passive: false });
+    handle.addEventListener('touchend', end);
+  }
+}
+
+/* ─── Boot ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  window.OS = new StaryOS();
+});

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기획자가 알면 개발자와 대화가 달라지는 CSS 개념 — ssstar.log</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/post.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">✦ <em>ssstar</em>.log</a>
+</nav>
+
+<div class="post-wrap">
+  <a class="back-link" href="../posts.html">← 목록으로</a>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span class="cat-badge cat-front">프론트 팁</span>
+      <span class="post-date">2025.04.28</span>
+      <span class="post-read">· 약 6분</span>
+    </div>
+    <h1 class="post-title">기획자가 알면 개발자와 대화가 달라지는 CSS 개념</h1>
+    <p class="post-desc">레이아웃, 반응형, 포커스 관리 — 기획 단계에서 알고 있으면 훨씬 정밀한 기획서를 쓸 수 있습니다.</p>
+    <div class="post-tags">
+      <span class="tag">#CSS</span>
+      <span class="tag">#협업</span>
+      <span class="tag">#기획자시각</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <p>기획자가 CSS를 직접 짜야 할 필요는 없습니다. 하지만 CSS가 어떻게 작동하는지를 이해하면 기획서의 질이 달라집니다. 개발자에게 "그건 CSS로 하기 어렵습니다"라는 말을 들었을 때 왜 어려운지 이해하고, 대안을 함께 찾을 수 있게 됩니다.</p>
+    <p>퍼블리셔 경험을 바탕으로 기획자에게 유용하다고 생각하는 CSS 개념 몇 가지를 골랐습니다.</p>
+
+    <h2>1. Flexbox와 Grid — 레이아웃의 기본 단위</h2>
+    <p>기획서에 카드 4개를 한 줄에 나열하는 UI를 그렸다면, 이건 Flex 또는 Grid로 구현됩니다. 이 개념을 알면 기획 단계에서 더 정밀한 질문을 할 수 있습니다.</p>
+
+    <ul>
+      <li>화면이 좁아질 때 카드는 몇 개씩 줄바꿈 되어야 하나요?</li>
+      <li>카드 높이가 다를 때 세로 정렬은 어떻게 해야 하나요?</li>
+      <li>마지막 카드가 3개보다 적을 때 빈 공간은 어떻게 처리하나요?</li>
+    </ul>
+
+    <p>이 질문들이 기획서에 답으로 들어있으면, 개발자는 별도 확인 없이 구현할 수 있습니다.</p>
+
+    <h2>2. 반응형과 Breakpoint</h2>
+    <p>반응형 디자인은 화면 크기에 따라 레이아웃이 달라지는 방식입니다. 기획서에 PC와 모바일 화면을 따로 그리는 것은 기본인데, 어느 크기에서 레이아웃이 전환되는지(Breakpoint)를 명시하지 않으면 개발자가 임의로 결정하게 됩니다.</p>
+
+    <div class="callout">
+      <strong>기획서에 명시하면 좋은 것:</strong> "768px 미만에서는 2단 → 1단으로 변경", "1024px 이상에서는 사이드바 표시" 처럼 구체적인 기준값이 있으면 커뮤니케이션이 훨씬 줄어듭니다.
+    </div>
+
+    <h2>3. position — 요소가 어디에 붙어있는가</h2>
+    <p>기획서에 "스크롤해도 상단에 고정되는 헤더"나 "버튼 위에 뜨는 툴팁"을 그릴 때, 이건 CSS의 <code>position</code> 속성과 관련됩니다.</p>
+
+    <ul>
+      <li><code>fixed</code>: 뷰포트(화면)에 고정 → 스크롤해도 따라다님</li>
+      <li><code>sticky</code>: 스크롤 중 특정 지점에서 고정 → 테이블 헤더에 자주 쓰임</li>
+      <li><code>absolute</code>: 부모 요소 기준으로 위치 → 배지, 툴팁에 자주 쓰임</li>
+    </ul>
+
+    <p>이 차이를 알면 "스크롤해도 따라다녀야 하는지"를 기획서에 명확히 쓸 수 있습니다. 개발자에게 "그냥 고정이요"라고 하면 어떤 방식인지 확인 작업이 생깁니다.</p>
+
+    <h2>4. overflow와 스크롤 처리</h2>
+    <p>콘텐츠가 영역을 넘쳤을 때 어떻게 처리할지는 기획에서 결정해야 할 사항입니다. 잘리게 할지, 스크롤이 생기게 할지, 영역을 늘릴지.</p>
+
+    <blockquote>
+      "내용이 많으면 어떻게 되나요?"라는 질문에 기획서가 답을 주지 못하면, 그 결정은 개발자에게 넘어간다.
+    </blockquote>
+
+    <h2>5. 포커스 스타일과 :focus</h2>
+    <p>키보드로 Tab을 누르면 요소에 포커스가 생기는데, 이 상태의 시각적 표현이 <code>:focus</code> 스타일입니다. 많은 디자인에서 기본 포커스 스타일(파란 테두리)을 "보기 싫다"는 이유로 제거하는 경우가 있습니다.</p>
+
+    <div class="callout">
+      <strong>주의:</strong> 포커스 스타일을 제거하면 키보드 사용자가 현재 어떤 요소에 위치하는지 알 수 없게 됩니다. 제거하려면 반드시 대체 스타일을 만들어야 합니다. 기획 단계에서 "포커스 스타일 커스텀 필요"를 명시하고, 디자인에 포함시켜야 합니다.
+    </div>
+
+    <hr>
+
+    <h2>마치며</h2>
+    <p>CSS를 공부하는 것이 목적이 아닙니다. 개발자가 어떻게 생각하는지를 이해하는 것이 목적입니다. 이 개념들을 알면 기획서에 모호함이 줄어들고, 리뷰 횟수가 줄어들고, 결과적으로 더 빠르게 좋은 서비스가 나옵니다.</p>
+    <p>기획자가 기술을 알아야 하는 이유는 직접 구현하기 위해서가 아니라, <strong>더 명확한 의사소통을 위해서</strong>입니다.</p>
+
+  </div>
+</div>
+
+<footer>© 2025 ssstar.log — made with ✦</footer>
+</body>
+</html>
