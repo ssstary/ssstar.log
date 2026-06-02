@@ -350,6 +350,11 @@
   </section>
 
   <!-- ══════════════════════
+       TOAST
+  ══════════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ══════════════════════
        START PANEL
   ══════════════════════ -->
   <div class="start-panel" id="startPanel" role="dialog" aria-label="AI Collaboration">
@@ -386,16 +391,20 @@
     <button class="tb-start" aria-label="시작">✦</button>
     <div class="tb-divider" aria-hidden="true"></div>
     <div class="tb-apps">
-      <button class="tb-app" data-win="blog"      aria-label="Blog 열기/전환">
+      <button class="tb-app" data-win="blog"      data-tooltip="Blog"
+              aria-label="Blog 열기/전환">
         <span>📝</span><span>Blog</span>
       </button>
-      <button class="tb-app" data-win="about"     aria-label="About 열기/전환">
+      <button class="tb-app" data-win="about"     data-tooltip="About"
+              aria-label="About 열기/전환">
         <span>👤</span><span>About</span>
       </button>
-      <button class="tb-app" data-win="portfolio" aria-label="Portfolio 열기/전환">
+      <button class="tb-app" data-win="portfolio" data-tooltip="Portfolio"
+              aria-label="Portfolio 열기/전환">
         <span>💼</span><span>Portfolio</span>
       </button>
-      <button class="tb-app" data-win="terminal"  aria-label="Terminal 열기/전환">
+      <button class="tb-app" data-win="terminal"  data-tooltip="Terminal"
+              aria-label="Terminal 열기/전환">
         <span>⚡</span><span>Terminal</span>
       </button>
     </div>

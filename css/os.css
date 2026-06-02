@@ -201,6 +201,14 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   from { opacity: 0; transform: scale(.93) translateY(6px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+@keyframes win-close {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(.93) translateY(4px); }
+}
+.win.closing {
+  animation: win-close .15s ease forwards;
+  pointer-events: none;
+}
 
 /* Window header / title bar */
 .win-header {
@@ -757,6 +765,43 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   color: var(--muted2);
 }
 
+/* ═══ TOAST ═══ */
+.toast-container {
+  position: fixed;
+  bottom: calc(var(--tb-h) + 12px);
+  right: 16px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--bg2);
+  border: .5px solid var(--border2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+  min-width: 180px;
+  max-width: 280px;
+  animation: toast-in .22s cubic-bezier(.34,1.4,.64,1);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.toast.out { opacity: 0; transform: translateX(16px); }
+.toast-icon { flex-shrink: 0; font-size: 13px; }
+.toast-msg  { line-height: 1.4; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 /* ═══ TASKBAR ═══ */
 .taskbar {
   position: relative;
@@ -810,8 +855,10 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   align-items: center;
   justify-content: center;
   gap: 1px;
+  width: 62px;
+  flex-shrink: 0;
   height: 40px;
-  padding: 0 10px;
+  padding: 0;
   border-radius: 6px;
   color: var(--muted);
   font-family: var(--mono);
@@ -820,6 +867,27 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   position: relative;
 }
 .tb-app span:first-child { font-size: 16px; line-height: 1; }
+
+/* 툴팁 */
+.tb-app[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg3);
+  border: .5px solid var(--border2);
+  border-radius: 5px;
+  padding: 4px 9px;
+  font-size: 10px;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s .5s;
+  z-index: 9999;
+}
+.tb-app[data-tooltip]:hover::before { opacity: 1; }
 .tb-app:hover { background: rgba(255,255,255,.05); color: var(--text); }
 .tb-app.running {
   background: rgba(79,156,240,.08);
@@ -832,9 +900,9 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
 }
 .tb-app.running::after   { background: var(--accent); }
 .tb-app.minimized::after { background: var(--muted2); }

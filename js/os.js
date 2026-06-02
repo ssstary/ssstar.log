@@ -4,6 +4,27 @@
 
 'use strict';
 
+/* ─── Toast ─── */
+function showToast(msg, type = 'info', duration = 3000) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+
+  const icons  = { info: '✦', success: '✓', error: '✕' };
+  const colors = { info: 'var(--accent)', success: 'var(--dot-g)', error: 'var(--dot-r)' };
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML =
+    `<span class="toast-icon" style="color:${colors[type]}">${icons[type]}</span>` +
+    `<span class="toast-msg">${msg}</span>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('out');
+    setTimeout(() => toast.remove(), 200);
+  }, duration);
+}
+
 /* ─── Blog 2-pane ─── */
 async function fetchPost(url, inner) {
   inner.innerHTML = '<div class="blog-loading">loading...</div>';
@@ -18,7 +39,8 @@ async function fetchPost(url, inner) {
     if (header) inner.appendChild(document.importNode(header, true));
     if (body)   inner.appendChild(document.importNode(body,   true));
   } catch {
-    inner.innerHTML = '<div class="blog-loading" style="color:var(--dot-r)">불러오기에 실패했습니다<br><small>GitHub Pages 배포 후 정상 동작합니다</small></div>';
+    inner.innerHTML = '<div class="blog-loading" style="color:var(--dot-r)">불러오기에 실패했습니다<br><small style="color:var(--muted2)">GitHub Pages 배포 후 정상 동작합니다</small></div>';
+    showToast('포스트 로드 실패 — 배포 환경에서 이용하세요', 'error', 4000);
   }
 }
 
@@ -189,7 +211,10 @@ class StaryOS {
       if (i >= steps.length) {
         setTimeout(() => {
           screen.classList.add('done');
-          setTimeout(() => { screen.remove(); }, 600);
+          setTimeout(() => {
+            screen.remove();
+            showToast('환영합니다 ✦ ssstar.log');
+          }, 600);
         }, 400);
         return;
       }
@@ -263,20 +288,27 @@ class StaryOS {
   /* ── Close window ── */
   close(id) {
     const w = this.wins[id];
-    if (!w) return;
-    w.el.classList.remove('active', 'minimized', 'maximized');
-    w.open      = false;
-    w.minimized = false;
+    if (!w || !w.open) return;
     this.setTaskbarBtn(id, false);
+    w.el.classList.add('closing');
+    setTimeout(() => {
+      w.el.classList.remove('active', 'minimized', 'maximized', 'closing');
+      w.open      = false;
+      w.minimized = false;
+    }, 150);
   }
 
   /* ── Minimize window ── */
   minimize(id) {
     const w = this.wins[id];
     if (!w || !w.open) return;
-    w.el.classList.add('minimized');
-    w.minimized = true;
     this.setTaskbarBtn(id, true, true);
+    w.el.classList.add('closing');
+    setTimeout(() => {
+      w.el.classList.remove('closing');
+      w.el.classList.add('minimized');
+      w.minimized = true;
+    }, 130);
   }
 
   /* ── Restore minimized window ── */
