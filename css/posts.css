@@ -1,14 +1,40 @@
-.page-header { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 2rem; border-bottom: 0.5px solid var(--border2); }
-.page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: .5rem; }
+.page-header {
+  max-width: 1120px; margin: 0 auto;
+  padding: 4rem 3rem 2.5rem;
+  border-bottom: 0.5px solid var(--border2);
+}
+.page-header h1 {
+  font-size: 36px; font-weight: 700;
+  letter-spacing: -0.03em; margin-bottom: .5rem;
+}
 .page-header p { font-size: 13px; color: var(--muted); }
 
-.filter-bar { max-width: 820px; margin: 0 auto; padding: 1.25rem 2rem; display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-bar {
+  max-width: 1120px; margin: 0 auto;
+  padding: 1.5rem 3rem;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
 .filter-btn {
-  font-size: 12px; padding: 5px 12px; border-radius: 20px;
+  font-size: 12px; padding: 5px 14px; border-radius: 20px;
   border: 0.5px solid var(--border2); background: var(--bg2);
   color: var(--muted); cursor: pointer; transition: all .15s;
   font-family: var(--mono);
 }
-.filter-btn:hover, .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
 
-.posts-wrap { max-width: 820px; margin: 0 auto; padding: 0 2rem 4rem; }
+.posts-wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding: 0 3rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 860px) {
+  .page-header { padding: 3rem 1.5rem 2rem; }
+  .page-header h1 { font-size: 26px; }
+  .filter-bar { padding: 1.25rem 1.5rem; }
+  .posts-wrap { grid-template-columns: 1fr; padding: 0 1.5rem 4rem; }
+}
