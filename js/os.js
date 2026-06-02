@@ -4,6 +4,24 @@
 
 'use strict';
 
+/* ─── Blog 2-pane ─── */
+async function fetchPost(url, inner) {
+  inner.innerHTML = '<div class="blog-loading">loading...</div>';
+  try {
+    const res  = await fetch(url);
+    const html = await res.text();
+    const doc  = new DOMParser().parseFromString(html, 'text/html');
+
+    inner.innerHTML = '';
+    const header = doc.querySelector('.post-header');
+    const body   = doc.querySelector('.post-body');
+    if (header) inner.appendChild(document.importNode(header, true));
+    if (body)   inner.appendChild(document.importNode(body,   true));
+  } catch {
+    inner.innerHTML = '<div class="blog-loading" style="color:var(--dot-r)">불러오기에 실패했습니다<br><small>GitHub Pages 배포 후 정상 동작합니다</small></div>';
+  }
+}
+
 /* ─── Stars (canvas background) ─── */
 function initStars() {
   const canvas = document.getElementById('starsCanvas');
@@ -147,6 +165,7 @@ class StaryOS {
     this.initMobileIcons();
     this.initTaskbar();
     this.initStartPanel();
+    this.initBlogPane();
     initClock();
     initStars();
     this.boot();
@@ -377,6 +396,35 @@ class StaryOS {
         }
       });
     });
+  }
+
+  /* ── Blog 2-pane ── */
+  initBlogPane() {
+    const wrap  = document.getElementById('blogWrap');
+    const inner = document.getElementById('blogPostInner');
+    const back  = document.getElementById('blogBack');
+    if (!wrap || !inner) return;
+
+    const resetBlog = () => {
+      wrap.classList.remove('has-post');
+      inner.innerHTML = '<div class="blog-empty"><span>✦</span><p>포스트를 선택하세요</p></div>';
+      document.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+    };
+
+    document.querySelectorAll('.wc-post-card[data-post]').forEach(card => {
+      card.addEventListener('click', async e => {
+        e.preventDefault();
+        document.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        wrap.classList.add('has-post');
+        await fetchPost(card.dataset.post, inner);
+      });
+    });
+
+    back?.addEventListener('click', resetBlog);
+
+    /* 창이 열릴 때마다 목록으로 초기화 */
+    this.wins['blog']?.el.addEventListener('staryos:open', resetBlog);
   }
 
   /* ── Start Panel (✦ button) ── */

@@ -72,56 +72,74 @@
       <div class="win-title">📝 Blog.app</div>
       <div class="win-spacer"></div>
     </div>
-    <div class="win-body">
-      <div class="wc-blog-header">
-        <span>✦ ssstar.log — 최근 글</span>
-        <a href="posts.html" target="_blank">모든 글 →</a>
+    <div class="win-body" style="overflow:hidden">
+      <div class="blog-wrap" id="blogWrap">
+
+        <!-- 왼쪽: 포스트 목록 -->
+        <div class="blog-list">
+          <div class="blog-list-hd">
+            <span>✦ ssstar.log</span>
+            <a href="posts.html" target="_blank" class="blog-all-link">전체 →</a>
+          </div>
+
+          <a class="wc-post-card" href="posts/publisher-to-planner.html"
+             data-post="posts/publisher-to-planner.html">
+            <div class="wc-post-meta">
+              <span class="wc-cat wc-cat-story">이직 기록</span>
+              <span class="wc-date">05.14</span>
+            </div>
+            <div class="wc-post-title">퍼블리셔가 기획자로 이직을 결심한 이유</div>
+          </a>
+
+          <a class="wc-post-card" href="posts/a11y-checklist.html"
+             data-post="posts/a11y-checklist.html">
+            <div class="wc-post-meta">
+              <span class="wc-cat wc-cat-a11y">웹접근성</span>
+              <span class="wc-date">05.10</span>
+            </div>
+            <div class="wc-post-title">기획서에서 놓치기 쉬운 웹접근성 체크리스트</div>
+          </a>
+
+          <a class="wc-post-card" href="posts/payment-ux.html"
+             data-post="posts/payment-ux.html">
+            <div class="wc-post-meta">
+              <span class="wc-cat wc-cat-ux">UX 분석</span>
+              <span class="wc-date">05.07</span>
+            </div>
+            <div class="wc-post-title">결제 페이지의 alert 하나가 이탈률을 높이는 이유</div>
+          </a>
+
+          <a class="wc-post-card" href="posts/ia-first.html"
+             data-post="posts/ia-first.html">
+            <div class="wc-post-meta">
+              <span class="wc-cat wc-cat-plan">기획 공부</span>
+              <span class="wc-date">05.03</span>
+            </div>
+            <div class="wc-post-title">IA(정보구조) 설계, 처음 해봤습니다</div>
+          </a>
+
+          <a class="wc-post-card" href="posts/css-for-planner.html"
+             data-post="posts/css-for-planner.html">
+            <div class="wc-post-meta">
+              <span class="wc-cat wc-cat-front">프론트 팁</span>
+              <span class="wc-date">04.28</span>
+            </div>
+            <div class="wc-post-title">기획자가 알면 개발자와 대화가 달라지는 CSS 개념</div>
+          </a>
+        </div>
+
+        <!-- 오른쪽: 본문 -->
+        <div class="blog-content" id="blogContent">
+          <button class="blog-back" id="blogBack" aria-label="목록으로">← 목록</button>
+          <div class="blog-post-inner" id="blogPostInner">
+            <div class="blog-empty">
+              <span>✦</span>
+              <p>포스트를 선택하세요</p>
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      <a class="wc-post-card" href="posts/publisher-to-planner.html" target="_blank">
-        <div class="wc-post-meta">
-          <span class="wc-cat wc-cat-story">이직 기록</span>
-          <span class="wc-date">2025.05.14</span>
-        </div>
-        <div class="wc-post-title">퍼블리셔가 기획자로 이직을 결심한 이유</div>
-        <div class="wc-post-desc">단순히 화면을 구현하는 것을 넘어, 왜 이걸 이렇게 만들어야 하는지를 고민하기 시작했습니다.</div>
-      </a>
-
-      <a class="wc-post-card" href="posts/a11y-checklist.html" target="_blank">
-        <div class="wc-post-meta">
-          <span class="wc-cat wc-cat-a11y">웹접근성</span>
-          <span class="wc-date">2025.05.10</span>
-        </div>
-        <div class="wc-post-title">기획서에서 놓치기 쉬운 웹접근성 체크리스트</div>
-        <div class="wc-post-desc">퍼블리셔로 일하며 직접 겪은 접근성 이슈들을 기획 단계에서 잡는 방법을 정리했습니다.</div>
-      </a>
-
-      <a class="wc-post-card" href="posts/payment-ux.html" target="_blank">
-        <div class="wc-post-meta">
-          <span class="wc-cat wc-cat-ux">UX 분석</span>
-          <span class="wc-date">2025.05.07</span>
-        </div>
-        <div class="wc-post-title">결제 페이지의 alert 하나가 이탈률을 높이는 이유</div>
-        <div class="wc-post-desc">실무에서 직접 제안했던 인라인 실시간 안내 방식 전환 경험을 UX 관점으로 풀어봤습니다.</div>
-      </a>
-
-      <a class="wc-post-card" href="posts/ia-first.html" target="_blank">
-        <div class="wc-post-meta">
-          <span class="wc-cat wc-cat-plan">기획 공부</span>
-          <span class="wc-date">2025.05.03</span>
-        </div>
-        <div class="wc-post-title">IA(정보구조) 설계, 처음 해봤습니다</div>
-        <div class="wc-post-desc">기획자 공부를 시작하며 처음으로 사이트맵과 IA를 직접 설계해본 과정을 기록했습니다.</div>
-      </a>
-
-      <a class="wc-post-card" href="posts/css-for-planner.html" target="_blank">
-        <div class="wc-post-meta">
-          <span class="wc-cat wc-cat-front">프론트 팁</span>
-          <span class="wc-date">2025.04.28</span>
-        </div>
-        <div class="wc-post-title">기획자가 알면 개발자와 대화가 달라지는 CSS 개념</div>
-        <div class="wc-post-desc">레이아웃, 반응형, 포커스 관리 — 기획 단계에서 알고 있으면 훨씬 정밀한 기획서를 쓸 수 있습니다.</div>
-      </a>
     </div>
   </section>
 
