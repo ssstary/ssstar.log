@@ -29,14 +29,20 @@
 
   <!-- Desktop icons (PC) -->
   <nav class="desktop-icons" aria-label="바탕화면 아이콘">
-    <button class="d-icon" data-win="blog"      aria-label="Blog 열기">
-      <div class="d-icon-img">📝</div><span>Blog</span>
+    <button class="d-icon" data-win="blog"      aria-label="Career.log 열기">
+      <div class="d-icon-img">📋</div><span>Career</span>
+    </button>
+    <button class="d-icon" data-win="daily"     aria-label="Daily.log 열기">
+      <div class="d-icon-img">💬</div><span>Daily</span>
+    </button>
+    <button class="d-icon" data-win="works"     aria-label="Works 열기">
+      <div class="d-icon-img">🗂️</div><span>Works</span>
     </button>
     <button class="d-icon" data-win="about"     aria-label="About 열기">
       <div class="d-icon-img">👤</div><span>About</span>
     </button>
-    <button class="d-icon" data-win="portfolio" aria-label="Portfolio 열기">
-      <div class="d-icon-img">💼</div><span>Portfolio</span>
+    <button class="d-icon" data-win="contact"   aria-label="Contact 열기">
+      <div class="d-icon-img">📮</div><span>Contact</span>
     </button>
     <button class="d-icon" data-win="terminal"  aria-label="Terminal 열기">
       <div class="d-icon-img">⚡</div><span>Terminal</span>
@@ -46,13 +52,19 @@
   <!-- Mobile icon grid -->
   <div class="mobile-grid" aria-label="앱 목록">
     <div class="m-icon" data-win="blog">
-      <div class="m-icon-img">📝</div><div class="m-icon-label">Blog</div>
+      <div class="m-icon-img">📋</div><div class="m-icon-label">Career</div>
+    </div>
+    <div class="m-icon" data-win="daily">
+      <div class="m-icon-img">💬</div><div class="m-icon-label">Daily</div>
+    </div>
+    <div class="m-icon" data-win="works">
+      <div class="m-icon-img">🗂️</div><div class="m-icon-label">Works</div>
     </div>
     <div class="m-icon" data-win="about">
       <div class="m-icon-img">👤</div><div class="m-icon-label">About</div>
     </div>
-    <div class="m-icon" data-win="portfolio">
-      <div class="m-icon-img">💼</div><div class="m-icon-label">Portfolio</div>
+    <div class="m-icon" data-win="contact">
+      <div class="m-icon-img">📮</div><div class="m-icon-label">Contact</div>
     </div>
     <div class="m-icon" data-win="terminal">
       <div class="m-icon-img">⚡</div><div class="m-icon-label">Terminal</div>
@@ -69,7 +81,7 @@
         <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
         <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
       </div>
-      <div class="win-title">📝 Blog.app</div>
+      <div class="win-title">📋 Career.log</div>
       <div class="win-spacer"></div>
     </div>
     <div class="win-body" style="overflow:hidden">
@@ -144,6 +156,184 @@
   </section>
 
   <!-- ──────────────────────
+       WIN: Daily
+  ────────────────────── -->
+  <section class="win" id="win-daily" role="dialog" aria-label="Daily.log">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">💬 Daily.log</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="daily-header">
+        <span>일상 · 생각 · 사담</span>
+      </div>
+
+      <div class="daily-card">
+        <div class="daily-meta">
+          <span class="daily-date">2025.06.03</span>
+        </div>
+        <div class="daily-title">AI랑 포트폴리오 만드는 중</div>
+        <div class="daily-body">
+          <p>Claude한테 옛날에 만들다 만 Windows OS 컨셉 보여줬더니 바로 완성해줬다. 부팅화면, 별 애니메이션, 드래그 가능한 창까지. 나는 방향만 잡았는데.</p>
+          <p>근데 이게 그냥 "AI가 만들어줬다"는 게 아니라, 내가 뭘 원하는지 알고 있었고 그걸 잘 전달했기 때문에 가능했다는 생각이 든다. 기획 감각이 있어야 AI도 잘 쓸 수 있다는 게 이런 거 아닐까.</p>
+        </div>
+      </div>
+
+      <div class="daily-card">
+        <div class="daily-meta">
+          <span class="daily-date">2025.05.20</span>
+        </div>
+        <div class="daily-title">BC카드 운영 1년째 느낀 것</div>
+        <div class="daily-body">
+          <p>같은 배너를 매달 업데이트하다 보면 이게 맞나 싶을 때가 있다. 퍼블리셔가 이 화면을 더 잘 알고 있는데 기획은 따로 있고, 의견을 내도 "그냥 기획대로 해주세요"가 돌아오는 경우가 많다.</p>
+          <p>기획자가 되고 싶다는 게 권한 욕심이라기보다, 처음부터 같이 생각하고 싶다는 거다.</p>
+        </div>
+      </div>
+
+      <div class="daily-card">
+        <div class="daily-meta">
+          <span class="daily-date">2025.05.02</span>
+        </div>
+        <div class="daily-title">이직을 결심하고 달라진 것들</div>
+        <div class="daily-body">
+          <p>기획자 전환을 결심하고 나서 가장 달라진 건, 서비스를 쓸 때 눈이 달라졌다는 거다. 예전엔 "이거 CSS로 어떻게 했지" 였다면 요즘은 "왜 이 버튼이 여기 있지, 이 플로우 어색한데" 가 먼저 나온다.</p>
+          <p>아직 공부 중이라 틀릴 수 있지만, 이 시각이 생긴 게 이직의 첫 번째 성과인 것 같다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: Works
+  ────────────────────── -->
+  <section class="win" id="win-works" role="dialog" aria-label="Works">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">🗂️ Works.app</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="works-header">
+        <span>BC카드 · 페이북 — 운영 퍼블리싱</span>
+        <span class="works-note">운영상 스크린샷 미첨부</span>
+      </div>
+
+      <div class="work-card">
+        <div class="wk-top">
+          <div class="wk-title">BC카드 메인 페이지</div>
+          <span class="wk-badge wk-running">운영 중</span>
+        </div>
+        <div class="wk-role">웹 퍼블리셔 · 운영담당</div>
+        <div class="wk-desc">카드사 메인 페이지 운영 및 유지보수. 신규 이벤트·배너 업데이트, 접근성 개선 작업 수행. 반복 업무 모듈화를 통해 운영 효율 개선.</div>
+        <div class="wk-tags">
+          <span>HTML/CSS</span><span>JavaScript</span><span>웹접근성</span><span>운영</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="wk-top">
+          <div class="wk-title">BC VIP · BC 기업 페이지</div>
+          <span class="wk-badge wk-running">운영 중</span>
+        </div>
+        <div class="wk-role">웹 퍼블리셔 · 운영담당</div>
+        <div class="wk-desc">VIP 고객 및 기업 전용 서비스 페이지 운영. 프로모션 주기에 맞춘 콘텐츠 업데이트, WAI-ARIA 기반 접근성 개선 지속 수행.</div>
+        <div class="wk-tags">
+          <span>HTML/CSS</span><span>WAI-ARIA</span><span>반응형</span><span>운영</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="wk-top">
+          <div class="wk-title">BC카드 관련 기타 페이지</div>
+          <span class="wk-badge wk-running">운영 중</span>
+        </div>
+        <div class="wk-role">웹 퍼블리셔 · 운영담당</div>
+        <div class="wk-desc">이벤트, 공지, 부가서비스 등 다수의 서브 페이지 운영. 디자인 가이드 반영 및 크로스브라우징 대응.</div>
+        <div class="wk-tags">
+          <span>HTML/CSS</span><span>크로스브라우징</span><span>운영</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="wk-top">
+          <div class="wk-title">페이북 앱 신규화면</div>
+          <span class="wk-badge wk-progress">제작 중</span>
+        </div>
+        <div class="wk-role">웹 퍼블리셔 (서브)</div>
+        <div class="wk-desc">페이북 앱 내 신규 화면 퍼블리싱 작업 진행 중. 모바일 환경 최적화 및 앱 내 웹뷰 기준 대응.</div>
+        <div class="wk-tags">
+          <span>HTML/CSS</span><span>모바일</span><span>웹뷰</span><span>진행 중</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: Contact
+  ────────────────────── -->
+  <section class="win" id="win-contact" role="dialog" aria-label="Contact">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">📮 Contact.app</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="wc-contact">
+        <div class="contact-greeting">
+          <div class="cg-name">ssstar</div>
+          <div class="cg-role">예비 웹기획자 · 웹 퍼블리셔 출신</div>
+          <div class="cg-desc">새로운 기회나 협업 제안은 언제든 환영합니다.</div>
+        </div>
+
+        <div class="contact-cards">
+          <button class="contact-card" id="copyEmail" data-value="yoonssstar@gmail.com"
+                  aria-label="이메일 복사">
+            <div class="cc-icon">✉</div>
+            <div class="cc-info">
+              <div class="cc-label">EMAIL</div>
+              <div class="cc-value">yoonssstar@gmail.com</div>
+              <div class="cc-hint">클릭하여 복사</div>
+            </div>
+          </button>
+
+          <a class="contact-card" href="https://github.com/ssstar" target="_blank"
+             aria-label="GitHub 열기">
+            <div class="cc-icon">⌥</div>
+            <div class="cc-info">
+              <div class="cc-label">GITHUB</div>
+              <div class="cc-value">github.com/ssstar</div>
+              <div class="cc-hint">새 탭에서 열기</div>
+            </div>
+          </a>
+
+          <a class="contact-card" href="https://linkedin.com" target="_blank"
+             aria-label="LinkedIn 열기">
+            <div class="cc-icon">in</div>
+            <div class="cc-info">
+              <div class="cc-label">LINKEDIN</div>
+              <div class="cc-value">추가 예정</div>
+              <div class="cc-hint">새 탭에서 열기</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
        WIN: About
   ────────────────────── -->
   <section class="win" id="win-about" role="dialog" aria-label="About">
@@ -178,21 +368,33 @@
         </div>
       </div>
 
-      <!-- Experience -->
+      <!-- Experience Timeline -->
       <div class="wc-section">
         <div class="wc-sec-label">EXPERIENCE</div>
-        <div class="wc-exp-row">
-          <div class="wc-exp-period">0000.00 ~ 0000.00</div>
-          <div>
-            <div class="wc-exp-title">웹 퍼블리셔</div>
-            <div class="wc-exp-desc">웹/앱 화면 구현, 디자인 가이드 반영, 운영 업무<br>웹접근성 개선, WAI-ARIA 적용</div>
+        <div class="wc-timeline">
+          <div class="tl-item tl-current">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-period">0000.00 ~ 현재</div>
+              <div class="tl-title">웹 퍼블리셔 · 운영담당</div>
+              <div class="tl-desc">BC카드 메인/VIP/기업 등 운영<br>페이북 앱 신규화면 제작</div>
+            </div>
           </div>
-        </div>
-        <div class="wc-exp-row">
-          <div class="wc-exp-period">0000.00 ~ 0000.00</div>
-          <div>
-            <div class="wc-exp-title">웹/앱 운영팀</div>
-            <div class="wc-exp-desc">대규모 서비스 유지·보수 경험<br>부서 간 협업 및 프로세스 개선</div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-period">0000.00 ~ 0000.00</div>
+              <div class="tl-title">웹/앱 운영팀</div>
+              <div class="tl-desc">대규모 서비스 유지·보수 경험<br>부서 간 협업 및 프로세스 개선</div>
+            </div>
+          </div>
+          <div class="tl-item tl-next">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-period">→ Next</div>
+              <div class="tl-title">웹기획자 전환</div>
+              <div class="tl-desc">UX 기획 · 정보구조 설계</div>
+            </div>
           </div>
         </div>
       </div>
@@ -391,17 +593,25 @@
     <button class="tb-start" aria-label="시작">✦</button>
     <div class="tb-divider" aria-hidden="true"></div>
     <div class="tb-apps">
-      <button class="tb-app" data-win="blog"      data-tooltip="Blog"
-              aria-label="Blog 열기/전환">
-        <span>📝</span><span>Blog</span>
+      <button class="tb-app" data-win="blog"      data-tooltip="Career.log"
+              aria-label="Career.log 열기/전환">
+        <span>📋</span><span>Career</span>
+      </button>
+      <button class="tb-app" data-win="daily"     data-tooltip="Daily.log"
+              aria-label="Daily.log 열기/전환">
+        <span>💬</span><span>Daily</span>
+      </button>
+      <button class="tb-app" data-win="works"     data-tooltip="Works"
+              aria-label="Works 열기/전환">
+        <span>🗂️</span><span>Works</span>
       </button>
       <button class="tb-app" data-win="about"     data-tooltip="About"
               aria-label="About 열기/전환">
         <span>👤</span><span>About</span>
       </button>
-      <button class="tb-app" data-win="portfolio" data-tooltip="Portfolio"
-              aria-label="Portfolio 열기/전환">
-        <span>💼</span><span>Portfolio</span>
+      <button class="tb-app" data-win="contact"   data-tooltip="Contact"
+              aria-label="Contact 열기/전환">
+        <span>📮</span><span>Contact</span>
       </button>
       <button class="tb-app" data-win="terminal"  data-tooltip="Terminal"
               aria-label="Terminal 열기/전환">

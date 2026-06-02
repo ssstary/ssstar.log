@@ -188,6 +188,7 @@ class StaryOS {
     this.initTaskbar();
     this.initStartPanel();
     this.initBlogPane();
+    this.initContact();
     initClock();
     initStars();
     this.boot();
@@ -443,10 +444,10 @@ class StaryOS {
       document.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
     };
 
-    document.querySelectorAll('.wc-post-card[data-post]').forEach(card => {
+    document.querySelectorAll('#blogWrap .wc-post-card[data-post]').forEach(card => {
       card.addEventListener('click', async e => {
         e.preventDefault();
-        document.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('#blogWrap .wc-post-card').forEach(c => c.classList.remove('active'));
         card.classList.add('active');
         wrap.classList.add('has-post');
         await fetchPost(card.dataset.post, inner);
@@ -457,6 +458,18 @@ class StaryOS {
 
     /* 창이 열릴 때마다 목록으로 초기화 */
     this.wins['blog']?.el.addEventListener('staryos:open', resetBlog);
+  }
+
+  /* ── Contact: 이메일 복사 ── */
+  initContact() {
+    const btn = document.getElementById('copyEmail');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const val = btn.dataset.value;
+      navigator.clipboard.writeText(val)
+        .then(() => showToast('이메일 복사됨 ✓', 'success', 2500))
+        .catch(() => showToast('복사 실패 — 직접 선택하세요', 'error'));
+    });
   }
 
   /* ── Start Panel (✦ button) ── */
