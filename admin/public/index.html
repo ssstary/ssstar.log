@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✦ ssstar.log 관리자</title>
+<script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a; --surface: #111; --border: #1e1e1e;
+  --input-bg: #161616; --text: #e2e2e2; --muted: #505050;
+  --accent: #7dd3fc; --success: #4ade80; --error: #f87171;
+  --daily: #6dbf99;
+}
+body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; height:100vh; overflow:hidden; display:flex; flex-direction:column; }
+
+/* Header */
+.header { display:flex; align-items:center; justify-content:space-between; padding:0 20px; height:48px; border-bottom:1px solid var(--border); background:var(--surface); flex-shrink:0; }
+.logo { font-size:14px; font-weight:600; }
+.logo em { font-style:normal; color:var(--accent); }
+.tabs { display:flex; gap:2px; }
+.tab { background:none; border:none; color:var(--muted); font-size:12px; padding:5px 13px; border-radius:5px; cursor:pointer; transition:.15s; }
+.tab:hover { color:var(--text); background:var(--border); }
+.tab.active { color:var(--accent); background:rgba(125,211,252,.08); }
+
+/* Panels */
+.panel { display:none; flex:1; overflow:hidden; }
+.panel.active { display:flex; flex-direction:column; }
+
+/* Editor layout */
+.editor { display:grid; grid-template-columns:400px 1fr; height:100%; overflow:hidden; }
+
+/* Form */
+.form-side { border-right:1px solid var(--border); overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:11px; }
+.fg { display:flex; flex-direction:column; gap:4px; }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+label { font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); }
+input, select, textarea { background:var(--input-bg); border:1px solid var(--border); border-radius:5px; color:var(--text); font-size:13px; padding:7px 9px; width:100%; outline:none; transition:border-color .15s; font-family:inherit; }
+input:focus, select:focus, textarea:focus { border-color:var(--accent); }
+select option { background:#1a1a1a; }
+
+/* Section toggle */
+.sect-toggle { display:flex; gap:4px; }
+.sect-btn { flex:1; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer; font-size:12px; font-weight:600; padding:7px; transition:.15s; }
+.sect-btn:hover { color:var(--text); border-color:#333; }
+.sect-btn.active[data-sect="career"] { color:var(--accent); border-color:var(--accent); background:rgba(125,211,252,.08); }
+.sect-btn.active[data-sect="daily"]  { color:var(--daily); border-color:var(--daily); background:rgba(109,191,153,.08); }
+
+/* Toolbar */
+.toolbar { display:flex; flex-wrap:wrap; gap:3px; padding:5px 7px; background:var(--input-bg); border:1px solid var(--border); border-bottom:none; border-radius:5px 5px 0 0; }
+.tb { background:none; border:1px solid transparent; border-radius:3px; color:var(--muted); cursor:pointer; font-size:11px; font-weight:600; padding:2px 7px; transition:.1s; font-family:inherit; }
+.tb:hover { border-color:var(--border); color:var(--text); background:var(--border); }
+#body { border-radius:0 0 5px 5px; min-height:240px; resize:vertical; font-family:'Consolas',monospace; font-size:12px; line-height:1.7; }
+
+.publish { border:none; border-radius:7px; color:#060606; cursor:pointer; font-size:13px; font-weight:700; padding:10px; transition:opacity .15s,transform .1s; }
+.publish.career { background:var(--accent); }
+.publish.daily  { background:var(--daily); }
+.publish:hover { opacity:.85; transform:translateY(-1px); }
+.publish:active { transform:none; }
+.publish:disabled { opacity:.4; cursor:default; transform:none; }
+
+/* Preview */
+.preview-side { overflow-y:auto; background:#0c0c0c; }
+.preview-label { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:10px 28px; border-bottom:1px solid var(--border); }
+
+/* Career preview */
+#preview-career { padding:28px 36px; max-width:660px; }
+.pmeta { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.cat-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.04em; }
+.cat-ux    { background:rgba(96,165,250,.14); color:#60a5fa; }
+.cat-a11y  { background:rgba(52,211,153,.14);  color:#34d399; }
+.cat-plan  { background:rgba(167,139,250,.14); color:#a78bfa; }
+.cat-front { background:rgba(251,146,60,.14);  color:#fb923c; }
+.cat-story { background:rgba(244,114,182,.14); color:#f472b6; }
+.pdate  { font-size:12px; color:var(--muted); }
+#p-title { font-size:24px; font-weight:700; line-height:1.3; margin-bottom:10px; color:#f0f0f0; }
+#p-desc  { font-size:13px; color:#777; margin-bottom:12px; }
+#p-tags  { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:24px; }
+.tag { font-size:11px; color:var(--muted); background:var(--border); padding:2px 8px; border-radius:3px; }
+#p-body  { font-size:14px; line-height:1.85; color:#bbb; border-top:1px solid var(--border); padding-top:20px; }
+#p-body h2 { font-size:17px; color:#eee; margin:24px 0 10px; }
+#p-body h3 { font-size:14px; color:#ddd; margin:18px 0 7px; }
+#p-body p  { margin-bottom:14px; }
+#p-body blockquote { border-left:3px solid var(--accent); padding:8px 14px; margin:14px 0; color:#888; font-style:italic; background:rgba(125,211,252,.04); border-radius:0 4px 4px 0; }
+#p-body code { background:var(--input-bg); border:1px solid var(--border); border-radius:3px; font-family:'Consolas',monospace; font-size:11px; padding:1px 5px; color:var(--accent); }
+#p-body pre { background:var(--surface); border:1px solid var(--border); border-radius:5px; overflow-x:auto; padding:12px 14px; margin:14px 0; }
+#p-body pre code { background:none; border:none; padding:0; color:#ccc; font-size:12px; }
+#p-body ul, #p-body ol { padding-left:18px; margin-bottom:14px; }
+#p-body li { margin-bottom:3px; }
+#p-body hr { border:none; border-top:1px solid var(--border); margin:20px 0; }
+
+/* Daily preview */
+#preview-daily { padding:28px 36px; max-width:560px; display:none; }
+.daily-prev-card { background:#0b1610; border:1px solid #1a2e20; border-radius:10px; padding:20px 22px; }
+.daily-prev-date  { font-size:11px; color:var(--daily); margin-bottom:6px; letter-spacing:.04em; }
+.daily-prev-title { font-size:16px; font-weight:700; color:#d0f0e0; margin-bottom:14px; line-height:1.4; }
+.daily-prev-body  { font-size:13px; line-height:1.85; color:#7baa8a; }
+.daily-prev-body p { margin-bottom:12px; }
+.daily-prev-body p:last-child { margin-bottom:0; }
+.daily-prev-body h2 { font-size:14px; color:#a0d0b0; margin:16px 0 8px; }
+.daily-prev-body blockquote { border-left:2px solid var(--daily); padding:6px 12px; color:#5a9070; margin:10px 0; }
+
+/* List panel */
+#panel-list { overflow-y:auto; padding:20px 24px; }
+.list-meta { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.post-items { display:flex; flex-direction:column; gap:6px; }
+.post-item { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--surface); border:1px solid var(--border); border-radius:7px; transition:border-color .15s; }
+.post-item:hover { border-color:#2c2c2c; }
+.pinfo { display:flex; align-items:center; gap:10px; }
+.pslug { font-size:12px; font-family:'Consolas',monospace; color:#888; }
+.plink { font-size:11px; color:var(--accent); text-decoration:none; opacity:.5; transition:opacity .15s; }
+.plink:hover { opacity:1; }
+.type-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:3px; letter-spacing:.04em; text-transform:uppercase; }
+.type-badge.career { background:rgba(125,211,252,.12); color:var(--accent); }
+.type-badge.daily  { background:rgba(109,191,153,.12); color:var(--daily); }
+.del { background:none; border:1px solid transparent; border-radius:4px; color:var(--muted); cursor:pointer; font-size:11px; padding:3px 9px; transition:.15s; }
+.del:hover { border-color:var(--error); color:var(--error); background:rgba(248,113,113,.08); }
+
+/* Toast */
+.toast { position:fixed; bottom:20px; right:20px; padding:10px 18px; border-radius:7px; font-size:13px; font-weight:500; z-index:999; opacity:0; transform:translateY(6px); transition:.22s; pointer-events:none; }
+.toast.show { opacity:1; transform:none; }
+.toast.ok  { background:rgba(74,222,128,.13); border:1px solid rgba(74,222,128,.28); color:var(--success); }
+.toast.err { background:rgba(248,113,113,.13); border:1px solid rgba(248,113,113,.28); color:var(--error); }
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:#252525; border-radius:2px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">✦ <em>ssstar</em>.log 관리자</div>
+  <div class="tabs">
+    <button class="tab active" onclick="go('write')">새 글 쓰기</button>
+    <button class="tab"       onclick="go('list')">글 목록</button>
+  </div>
+</div>
+
+<!-- 새 글 쓰기 -->
+<div class="panel active" id="panel-write">
+  <div class="editor">
+
+    <div class="form-side">
+
+      <div class="fg">
+        <label>섹션</label>
+        <div class="sect-toggle">
+          <button class="sect-btn active" data-sect="career" onclick="setSect('career')">📋 Career</button>
+          <button class="sect-btn"        data-sect="daily"  onclick="setSect('daily')">💬 Daily</button>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>제목</label>
+        <input id="title" type="text" placeholder="글 제목을 입력하세요" oninput="onTitle()">
+      </div>
+
+      <div class="row2">
+        <div class="fg">
+          <label>슬러그 (URL)</label>
+          <input id="slug" type="text" placeholder="자동생성" oninput="slugTouched=true">
+        </div>
+        <div class="fg">
+          <label>날짜</label>
+          <input id="date" type="date" onchange="render()">
+        </div>
+      </div>
+
+      <!-- Career 전용 필드 -->
+      <div id="career-fields">
+        <div class="fg" style="margin-bottom:11px">
+          <label>카테고리</label>
+          <select id="cat" onchange="render()">
+            <option value="ux">UX 분석</option>
+            <option value="a11y">웹접근성</option>
+            <option value="plan">기획 공부</option>
+            <option value="front">프론트 팁</option>
+            <option value="story">이직 기록</option>
+          </select>
+        </div>
+        <div class="fg" style="margin-bottom:11px">
+          <label>한줄 요약</label>
+          <input id="desc" type="text" placeholder="포스팅 목록에 표시될 설명" oninput="render()">
+        </div>
+        <div class="fg" style="margin-bottom:0">
+          <label>태그 (쉼표 구분)</label>
+          <input id="tags" type="text" placeholder="이직, 퍼블리셔, 기획자" oninput="render()">
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>본문 (마크다운)</label>
+        <div class="toolbar">
+          <button class="tb" onclick="ins('**','**')">B</button>
+          <button class="tb" onclick="ins('*','*')"><em>I</em></button>
+          <button class="tb" onclick="ins('\n## ','',1)">H2</button>
+          <button class="tb" onclick="ins('\n### ','',1)">H3</button>
+          <button class="tb" onclick="ins('\n> ','',1)">인용</button>
+          <button class="tb" onclick="ins('`','`')">코드</button>
+          <button class="tb" onclick="ins('\n```\n','\n```')">블록</button>
+          <button class="tb" onclick="ins('\n---\n','',1)">—</button>
+        </div>
+        <textarea id="body" oninput="render()" placeholder="마크다운으로 본문을 작성하세요..."></textarea>
+      </div>
+
+      <button class="publish career" id="pub-btn" onclick="publish()">✦ 발행하기</button>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-side">
+      <div class="preview-label">미리보기</div>
+
+      <!-- Career preview -->
+      <div id="preview-career">
+        <div class="pmeta">
+          <span class="cat-badge cat-ux" id="p-badge">UX 분석</span>
+          <span class="pdate" id="p-date"></span>
+        </div>
+        <h1 id="p-title" style="color:#333;font-style:italic;">제목을 입력하세요</h1>
+        <p  id="p-desc"  style="color:#333;">한줄 요약</p>
+        <div id="p-tags"></div>
+        <div id="p-body"></div>
+      </div>
+
+      <!-- Daily preview -->
+      <div id="preview-daily">
+        <div class="daily-prev-card">
+          <div class="daily-prev-date"  id="pd-date"></div>
+          <div class="daily-prev-title" id="pd-title" style="color:#333;font-style:italic;">제목을 입력하세요</div>
+          <div class="daily-prev-body"  id="pd-body"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 글 목록 -->
+<div class="panel" id="panel-list">
+  <div class="list-meta" id="list-meta">불러오는 중...</div>
+  <div class="post-items" id="post-items"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CATS = { ux:'UX 분석', a11y:'웹접근성', plan:'기획 공부', front:'프론트 팁', story:'이직 기록' };
+let slugTouched = false;
+let currentType = 'career';
+
+document.getElementById('date').value = new Date().toISOString().slice(0,10);
+render();
+
+/* 탭 전환 */
+function go(tab) {
+  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('active', i === (tab==='write'?0:1)));
+  document.getElementById('panel-write').classList.toggle('active', tab === 'write');
+  document.getElementById('panel-list').classList.toggle('active', tab === 'list');
+  if (tab === 'list') loadList();
+}
+
+/* 섹션 전환 */
+function setSect(type) {
+  currentType = type;
+  document.querySelectorAll('.sect-btn').forEach(b => b.classList.toggle('active', b.dataset.sect === type));
+  document.getElementById('career-fields').style.display = type === 'career' ? '' : 'none';
+  document.getElementById('preview-career').style.display = type === 'career' ? '' : 'none';
+  document.getElementById('preview-daily').style.display  = type === 'daily'  ? '' : 'none';
+
+  const btn = document.getElementById('pub-btn');
+  btn.className = `publish ${type}`;
+
+  if (!slugTouched) {
+    document.getElementById('slug').value = makeSlug(document.getElementById('title').value);
+  }
+  render();
+}
+
+function toSlug(s) {
+  return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-가-힣]/g,'').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+}
+function makeSlug(title) {
+  const base = toSlug(title);
+  return currentType === 'daily' ? (base ? `daily-${base}` : '') : base;
+}
+
+function onTitle() {
+  if (!slugTouched) document.getElementById('slug').value = makeSlug(document.getElementById('title').value);
+  render();
+}
+
+function ins(before, after) {
+  const ta = document.getElementById('body');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.slice(s,e);
+  ta.value = ta.value.slice(0,s) + before + sel + after + ta.value.slice(e);
+  ta.focus();
+  ta.setSelectionRange(s+before.length, s+before.length+sel.length);
+  render();
+}
+
+/* 미리보기 렌더링 */
+function render() {
+  const title = document.getElementById('title').value;
+  const dv    = document.getElementById('date').value;
+  const body  = document.getElementById('body').value;
+  const date  = dv ? dv.replace(/-/g,'.') : '';
+
+  if (currentType === 'daily') {
+    const pt = document.getElementById('pd-title');
+    pt.textContent = title || '제목을 입력하세요';
+    pt.style.color = title ? '#d0f0e0' : '#333';
+    pt.style.fontStyle = title ? 'normal' : 'italic';
+    document.getElementById('pd-date').textContent = date;
+    document.getElementById('pd-body').innerHTML = body ? marked.parse(body) : '';
+  } else {
+    const cat  = document.getElementById('cat').value;
+    const desc = document.getElementById('desc').value;
+    const tags = document.getElementById('tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+
+    const badge = document.getElementById('p-badge');
+    badge.textContent = CATS[cat];
+    badge.className = `cat-badge cat-${cat}`;
+    document.getElementById('p-date').textContent = date;
+
+    const pt = document.getElementById('p-title');
+    pt.textContent = title || '제목을 입력하세요';
+    pt.style.color = title ? '#f0f0f0' : '#333';
+    pt.style.fontStyle = title ? 'normal' : 'italic';
+
+    const pd = document.getElementById('p-desc');
+    pd.textContent = desc || '한줄 요약';
+    pd.style.color = desc ? '#777' : '#333';
+
+    document.getElementById('p-tags').innerHTML = tags.map(t=>`<span class="tag">#${t}</span>`).join('');
+    document.getElementById('p-body').innerHTML  = body ? marked.parse(body) : '';
+  }
+}
+
+/* 발행 */
+async function publish() {
+  const title = document.getElementById('title').value.trim();
+  const slug  = document.getElementById('slug').value.trim();
+  const dv    = document.getElementById('date').value;
+  const body  = document.getElementById('body').value.trim();
+
+  if (!title || !dv || !body) { toast('제목, 날짜, 본문은 필수입니다','err'); return; }
+
+  const payload = { type: currentType, title, slug, date: dv.replace(/-/g,'.'), body };
+
+  if (currentType === 'career') {
+    const desc = document.getElementById('desc').value.trim();
+    const cat  = document.getElementById('cat').value;
+    const tags = document.getElementById('tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+    if (!desc) { toast('한줄 요약은 필수입니다','err'); return; }
+    Object.assign(payload, { cat, desc, tags });
+  }
+
+  const btn = document.getElementById('pub-btn');
+  btn.textContent = '발행 중...';
+  btn.disabled = true;
+
+  try {
+    const r = await fetch('/api/posts', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+    });
+    const d = await r.json();
+    if (r.ok) { toast(`✦ "${title}" 발행 완료!`,'ok'); reset(); }
+    else toast(d.error || '발행 실패','err');
+  } catch { toast('서버 연결 오류','err'); }
+  finally {
+    btn.textContent = '✦ 발행하기';
+    btn.disabled = false;
+  }
+}
+
+function reset() {
+  ['title','slug','desc','tags','body'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('date').value = new Date().toISOString().slice(0,10);
+  slugTouched = false;
+  render();
+}
+
+/* 글 목록 */
+async function loadList() {
+  const meta  = document.getElementById('list-meta');
+  const items = document.getElementById('post-items');
+  try {
+    const posts = await (await fetch('/api/posts')).json();
+    const career = posts.filter(p=>p.type==='career').length;
+    const daily  = posts.filter(p=>p.type==='daily').length;
+    meta.textContent = `총 ${posts.length}개 — Career ${career}개 · Daily ${daily}개`;
+    items.innerHTML = posts.map(({slug,type}) => `
+      <div class="post-item" id="item-${slug}">
+        <div class="pinfo">
+          <span class="type-badge ${type}">${type==='career'?'Career':'Daily'}</span>
+          <span class="pslug">${slug}</span>
+          <a class="plink" href="../posts/${slug}.html" target="_blank">→ 보기</a>
+        </div>
+        <button class="del" onclick="del('${slug}')">삭제</button>
+      </div>`).join('');
+  } catch { meta.textContent = '목록을 불러올 수 없습니다'; }
+}
+
+async function del(slug) {
+  if (!confirm(`"${slug}" 포스트를 삭제할까요?`)) return;
+  try {
+    const r = await fetch(`/api/posts/${slug}`, {method:'DELETE'});
+    const d = await r.json();
+    if (r.ok) {
+      document.getElementById(`item-${slug}`)?.remove();
+      toast(`"${slug}" 삭제 완료`,'ok');
+      const c = document.querySelectorAll('.post-item').length;
+      const career = document.querySelectorAll('.type-badge.career').length;
+      const daily  = document.querySelectorAll('.type-badge.daily').length;
+      document.getElementById('list-meta').textContent = `총 ${c}개 — Career ${career}개 · Daily ${daily}개`;
+    } else toast(d.error||'삭제 실패','err');
+  } catch { toast('서버 연결 오류','err'); }
+}
+
+function toast(msg,type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className=`toast ${type} show`;
+  clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>

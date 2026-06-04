@@ -1,0 +1,93 @@
+[
+  {
+    "slug": "publisher-to-planner",
+    "type": "career",
+    "title": "퍼블리셔가 기획자로 이직을 결심한 이유",
+    "date": "2025.05.14",
+    "shortDate": "05.14",
+    "cat": "story",
+    "desc": "단순히 화면을 구현하는 것을 넘어, 왜 이걸 이렇게 만들어야 하는지를 고민하기 시작했습니다.",
+    "tags": [
+      "이직",
+      "퍼블리셔",
+      "기획자"
+    ]
+  },
+  {
+    "slug": "a11y-checklist",
+    "type": "career",
+    "title": "기획서에서 놓치기 쉬운 웹접근성 체크리스트",
+    "date": "2025.05.10",
+    "shortDate": "05.10",
+    "cat": "a11y",
+    "desc": "퍼블리셔로 일하며 직접 겪은 접근성 이슈들을 기획 단계에서 잡는 방법을 정리했습니다.",
+    "tags": [
+      "웹접근성",
+      "WAI-ARIA",
+      "기획"
+    ]
+  },
+  {
+    "slug": "payment-ux",
+    "type": "career",
+    "title": "결제 페이지의 alert 하나가 이탈률을 높이는 이유",
+    "date": "2025.05.07",
+    "shortDate": "05.07",
+    "cat": "ux",
+    "desc": "실무에서 직접 제안했던 인라인 실시간 안내 방식 전환 경험을 UX 관점으로 풀어봤습니다.",
+    "tags": [
+      "UX",
+      "결제흐름",
+      "개선사례"
+    ]
+  },
+  {
+    "slug": "ia-first",
+    "type": "career",
+    "title": "IA(정보구조) 설계, 처음 해봤습니다",
+    "date": "2025.05.03",
+    "shortDate": "05.03",
+    "cat": "plan",
+    "desc": "기획자 공부를 시작하며 처음으로 사이트맵과 IA를 직접 설계해본 과정을 기록했습니다.",
+    "tags": [
+      "IA",
+      "정보구조",
+      "기획공부"
+    ]
+  },
+  {
+    "slug": "css-for-planner",
+    "type": "career",
+    "title": "기획자가 알면 개발자와 대화가 달라지는 CSS 개념",
+    "date": "2025.04.28",
+    "shortDate": "04.28",
+    "cat": "front",
+    "desc": "레이아웃, 반응형, 포커스 관리 — 기획 단계에서 알고 있으면 훨씬 정밀한 기획서를 쓸 수 있습니다.",
+    "tags": [
+      "CSS",
+      "협업",
+      "기획자시각"
+    ]
+  },
+  {
+    "slug": "daily-ai-portfolio",
+    "type": "daily",
+    "title": "AI랑 포트폴리오 만드는 중",
+    "date": "2025.06.03",
+    "shortDate": "06.03"
+  },
+  {
+    "slug": "daily-bc-card-1year",
+    "type": "daily",
+    "title": "BC카드 운영 1년째 느낀 것",
+    "date": "2025.05.20",
+    "shortDate": "05.20"
+  },
+  {
+    "slug": "daily-career-change",
+    "type": "daily",
+    "title": "이직을 결심하고 달라진 것들",
+    "date": "2025.05.02",
+    "shortDate": "05.02"
+  }
+]

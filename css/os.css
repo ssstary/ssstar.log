@@ -313,6 +313,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
 .wc-cat-plan  { background: #2a1a05; color: #f5c87a; }
 .wc-cat-front { background: #0a1e30; color: #60a5fa; }
 .wc-cat-story { background: #2a0a1e; color: #f0abda; }
+.wc-cat-daily { background: rgba(109,191,153,.12); color: #6dbf99; }
 
 .wc-date { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
 .wc-post-title { font-size: 13px; font-weight: 500; margin-bottom: 3px; line-height: 1.45; }
@@ -511,37 +512,47 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   .blog-back { display: flex; }
 }
 
-/* ─── Daily.log ─── */
-.daily-header {
-  padding: 12px 16px 10px;
+/* ─── Daily.log 2-pane ─── */
+.daily-wrap {
+  display: flex;
+  height: 100%;
+}
+
+.daily-list {
+  width: 200px;
+  flex-shrink: 0;
+  border-right: .5px solid var(--border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.daily-list::-webkit-scrollbar { width: 3px; }
+.daily-list::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 2px; }
+
+.daily-list-hd {
+  padding: 11px 14px 9px;
   border-bottom: .5px solid var(--border);
   font-family: var(--mono);
   font-size: 11px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
   color: var(--muted2);
 }
+.daily-list-hd span { color: #6dbf99; }
 
-.daily-card {
-  padding: 16px 18px;
-  border-bottom: .5px solid var(--border);
+.daily-list .wc-post-card { padding: 10px 14px; border-radius: 0; }
+.daily-list .wc-post-card.active {
+  background: rgba(109,191,153,.08);
+  border-left: 2px solid #6dbf99;
+  padding-left: 12px;
 }
-.daily-meta { margin-bottom: 5px; }
-.daily-date {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted2);
-}
-.daily-title {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-.daily-body p {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: .7rem;
-}
-.daily-body p:last-child { margin-bottom: 0; }
+.daily-list .wc-post-title { font-size: 12px; line-height: 1.45; }
+
+/* Daily window size 확장 */
+#win-daily { width: 680px; height: 500px; }
 
 /* ─── Works.app ─── */
 .works-header {

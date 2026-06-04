@@ -1,0 +1,13 @@
+{
+  "name": "ssstar-admin",
+  "version": "1.0.0",
+  "description": "ssstar.log 관리자 서버",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "marked": "^9.1.6"
+  }
+}

@@ -188,6 +188,9 @@ class StaryOS {
     this.initTaskbar();
     this.initStartPanel();
     this.initBlogPane();
+    this.initDailyPane();
+    this.loadPosts();
+    this.loadWindowContents();
     this.initContact();
     initClock();
     initStars();
@@ -438,26 +441,112 @@ class StaryOS {
     const back  = document.getElementById('blogBack');
     if (!wrap || !inner) return;
 
-    const resetBlog = () => {
+    const reset = () => {
       wrap.classList.remove('has-post');
       inner.innerHTML = '<div class="blog-empty"><span>✦</span><p>포스트를 선택하세요</p></div>';
-      document.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+      wrap.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
     };
 
-    document.querySelectorAll('#blogWrap .wc-post-card[data-post]').forEach(card => {
-      card.addEventListener('click', async e => {
-        e.preventDefault();
-        document.querySelectorAll('#blogWrap .wc-post-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        wrap.classList.add('has-post');
-        await fetchPost(card.dataset.post, inner);
-      });
+    wrap.addEventListener('click', async e => {
+      const card = e.target.closest('#blogWrap .wc-post-card[data-post]');
+      if (!card) return;
+      e.preventDefault();
+      wrap.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      wrap.classList.add('has-post');
+      await fetchPost(card.dataset.post, inner);
     });
 
-    back?.addEventListener('click', resetBlog);
+    back?.addEventListener('click', reset);
+    this.wins['blog']?.el.addEventListener('staryos:open', reset);
+  }
 
-    /* 창이 열릴 때마다 목록으로 초기화 */
-    this.wins['blog']?.el.addEventListener('staryos:open', resetBlog);
+  /* ── Daily 2-pane ── */
+  initDailyPane() {
+    const wrap  = document.getElementById('dailyWrap');
+    const inner = document.getElementById('dailyPostInner');
+    const back  = document.getElementById('dailyBack');
+    if (!wrap || !inner) return;
+
+    const reset = () => {
+      wrap.classList.remove('has-post');
+      inner.innerHTML = '<div class="blog-empty"><span>💬</span><p>포스트를 선택하세요</p></div>';
+      wrap.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+    };
+
+    wrap.addEventListener('click', async e => {
+      const card = e.target.closest('#dailyWrap .wc-post-card[data-post]');
+      if (!card) return;
+      e.preventDefault();
+      wrap.querySelectorAll('.wc-post-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      wrap.classList.add('has-post');
+      await fetchPost(card.dataset.post, inner);
+    });
+
+    back?.addEventListener('click', reset);
+    this.wins['daily']?.el.addEventListener('staryos:open', reset);
+  }
+
+  /* ── posts.json 로드 후 카드 렌더링 ── */
+  async loadPosts() {
+    const CATS = { ux:'UX 분석', a11y:'웹접근성', plan:'기획 공부', front:'프론트 팁', story:'이직 기록' };
+    try {
+      const res = await fetch('posts/posts.json');
+      const posts = await res.json();
+
+      const blogList  = document.querySelector('#blogWrap .blog-list');
+      const dailyList = document.querySelector('#dailyWrap .daily-list');
+
+      posts.filter(p => p.type === 'career').forEach(p => {
+        const a = document.createElement('a');
+        a.className = 'wc-post-card';
+        a.href = `posts/${p.slug}.html`;
+        a.dataset.post = `posts/${p.slug}.html`;
+        a.innerHTML = `<div class="wc-post-meta">
+          <span class="wc-cat wc-cat-${p.cat}">${CATS[p.cat]||p.cat}</span>
+          <span class="wc-date">${p.shortDate}</span>
+        </div>
+        <div class="wc-post-title">${p.title}</div>`;
+        blogList?.appendChild(a);
+      });
+
+      posts.filter(p => p.type === 'daily').forEach(p => {
+        const a = document.createElement('a');
+        a.className = 'wc-post-card';
+        a.href = `posts/${p.slug}.html`;
+        a.dataset.post = `posts/${p.slug}.html`;
+        a.innerHTML = `<div class="wc-post-meta">
+          <span class="wc-cat wc-cat-daily">일상</span>
+          <span class="wc-date">${p.shortDate}</span>
+        </div>
+        <div class="wc-post-title">${p.title}</div>`;
+        dailyList?.appendChild(a);
+      });
+    } catch (e) {
+      console.warn('posts.json 로드 실패:', e);
+    }
+  }
+
+  /* ── 창 콘텐츠 pages/*.html 에서 로드 ── */
+  async loadWindowContents() {
+    const pages = [
+      { id: 'win-works-body',     url: 'pages/works.html' },
+      { id: 'win-about-body',     url: 'pages/about.html' },
+      { id: 'win-contact-body',   url: 'pages/contact.html' },
+      { id: 'win-portfolio-body', url: 'pages/portfolio.html' },
+    ];
+    await Promise.all(pages.map(async ({ id, url }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        const res = await fetch(url);
+        el.innerHTML = await res.text();
+      } catch {
+        el.innerHTML = '<div style="padding:20px;font-size:12px;color:var(--muted2)">콘텐츠를 불러올 수 없습니다</div>';
+      }
+    }));
+    this.initContact();
   }
 
   /* ── Contact: 이메일 복사 ── */
