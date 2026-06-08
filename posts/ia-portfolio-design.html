@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이 포트폴리오, 사실 IA부터 그렸어요 — ssstar.log</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/post.css">
+<style>
+.ia-diagram {
+  background: var(--bg2);
+  border: 0.5px solid var(--border2);
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  margin: 1.75rem 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1;
+  overflow-x: auto;
+}
+.ia-root {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 1.1rem;
+  letter-spacing: .02em;
+}
+.ia-node {
+  color: var(--text);
+  padding-left: 0;
+  margin-bottom: .55rem;
+}
+.ia-node .ia-prefix {
+  color: var(--muted2);
+  user-select: none;
+}
+.ia-file {
+  color: var(--muted2);
+  font-size: 11px;
+  margin-left: .5rem;
+}
+.ia-children {
+  margin-top: .35rem;
+  margin-bottom: .35rem;
+}
+.ia-child {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: .3rem;
+}
+.ia-child .ia-prefix {
+  color: var(--muted2);
+  user-select: none;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">✦ <em>ssstar</em>.log</a>
+</nav>
+
+<div class="post-wrap">
+  <a class="back-link" href="../posts.html">← 목록으로</a>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span class="cat-badge cat-plan">기획 공부</span>
+      <span class="post-date">2026.06.09</span>
+      <span class="post-read">· 약 3분</span>
+    </div>
+    <h1 class="post-title">이 포트폴리오, 사실 IA부터 그렸어요</h1>
+    <p class="post-desc">단순한 포트폴리오였는데, 디자인이 막막했습니다. Windows OS 컨셉 하나가 그 고민을 풀어줬고, 그 다음부터는 수월했습니다.</p>
+    <div class="post-tags">
+      <span class="tag">#IA</span>
+      <span class="tag">#정보구조</span>
+      <span class="tag">#포트폴리오</span>
+      <span class="tag">#기획공부</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <p>시작은 단순했습니다. 포트폴리오 사이트 하나 만들자.</p>
+    <p>뭘 담을지는 금방 정해졌습니다. 기획자로 전환 중인 과정, 만들어본 것들, 나 자신을 소개하는 공간. 문제는 어떻게 생겼으면 좋겠는지가 전혀 감이 안 왔다는 겁니다.</p>
+
+    <h2>디자인이 막막했다</h2>
+    <p>평범한 포트폴리오는 만들기 싫었습니다. 그렇다고 특이하게 가려니 뭘 레퍼런스로 삼아야 할지도 몰랐습니다. 한동안 빈 캔버스를 쳐다봤습니다.</p>
+    <p>그러다 눈에 들어온 게 Windows OS 컨셉이었습니다. 부팅 화면, 드래그 가능한 창, 별 애니메이션. 딱 봤을 때 이거다 싶었습니다.</p>
+
+    <blockquote>방향 하나가 생각보다 많은 것을 결정해줬습니다.</blockquote>
+
+    <p>OS 테마가 잡히니 디자인 언어가 따라왔습니다. 어두운 배경, 모노스페이스 폰트, 창처럼 생긴 컴포넌트. 하나하나 고민하지 않아도 "OS라면 이렇겠지"라는 기준이 생겼습니다.</p>
+
+    <h2>페이지 구성은 사실 트래디셔널하다</h2>
+    <p>그런데 재밌는 건, 껍데기는 OS인데 속은 지극히 평범한 포트폴리오라는 겁니다. 홈, 블로그, 포트폴리오, 소개, Contact. 어디서 봐도 낯익은 구조입니다.</p>
+    <p>OS 컨셉이 확정되고 나서야 구조를 그렸는데, 막상 그려보니 특별할 게 없었습니다.</p>
+
+    <div class="ia-diagram">
+      <div class="ia-root">✦ ssstar.log</div>
+      <div class="ia-node"><span class="ia-prefix">├─ </span>홈<span class="ia-file">index.html</span></div>
+      <div class="ia-node">
+        <span class="ia-prefix">├─ </span>포스팅<span class="ia-file">posts.html</span>
+        <div class="ia-children">
+          <div class="ia-child"><span class="ia-prefix">│  ├─ </span>일상</div>
+          <div class="ia-child"><span class="ia-prefix">│  ├─ </span>기획 공부</div>
+          <div class="ia-child"><span class="ia-prefix">│  └─ </span>개발 / 프론트</div>
+        </div>
+      </div>
+      <div class="ia-node">
+        <span class="ia-prefix">├─ </span>포트폴리오<span class="ia-file">portfolio.html</span>
+        <div class="ia-children">
+          <div class="ia-child"><span class="ia-prefix">│  ├─ </span>Works (프로젝트 목록)</div>
+          <div class="ia-child"><span class="ia-prefix">│  └─ </span>Timeline (이력)</div>
+        </div>
+      </div>
+      <div class="ia-node"><span class="ia-prefix">├─ </span>소개<span class="ia-file">about.html</span></div>
+      <div class="ia-node"><span class="ia-prefix">└─ </span>Contact<span class="ia-file">contact.html</span></div>
+    </div>
+
+    <p>네비게이션 4개에 Contact 별도. 포스팅은 세 카테고리. 어디서나 보던 구조입니다. OS라는 옷을 입혀서 달라 보일 뿐이었습니다.</p>
+
+    <div class="callout">
+      <strong>하나 바뀐 것:</strong> 처음엔 Timeline을 포트폴리오 하위 페이지로 뒀는데, 만들어보니 포트폴리오 페이지 안 섹션으로 넣는 게 더 자연스러웠습니다. 별도 페이지로 두면 이동이 하나 더 생기고, 타임라인은 포트폴리오의 일부처럼 읽히는 게 맞다고 느꼈습니다.
+    </div>
+
+    <h2>결국 방향이 먼저였다</h2>
+    <p>돌아보면 디자인 방향이 잡히기 전까지는 아무것도 진행이 안 됐습니다. 뭘 담을지 알아도, 어떻게 생겼는지 모르면 손이 안 갑니다. OS 컨셉 하나가 그 막힌 부분을 뚫어줬고, 그 다음부터는 수월했습니다.</p>
+    <p>구조 자체는 평범해도 됩니다. 무엇을 담고 어떻게 보여줄지만 확실하면, 나머지는 따라옵니다.</p>
+
+  </div>
+</div>
+
+<footer>© 2025 ssstar.log — made with ✦</footer>
+</body>
+</html>

@@ -1,5 +1,35 @@
 [
   {
+    "slug": "ai-as-planner-partner",
+    "type": "career",
+    "title": "AI랑 작업하면서 기획을 배우고 있습니다",
+    "date": "2026.06.09",
+    "shortDate": "06.09",
+    "cat": "plan",
+    "desc": "기획자랑 협업은 해봤지만 기획을 직접 해본 적은 없었습니다. AI가 제안하고 내가 방향을 잡는 과정에서, 기획 판단이 뭔지 조금씩 알아가고 있습니다.",
+    "tags": [
+      "AI",
+      "기획공부",
+      "Claude",
+      "협업"
+    ]
+  },
+  {
+    "slug": "ia-portfolio-design",
+    "type": "career",
+    "title": "이 포트폴리오, 사실 IA부터 그렸어요",
+    "date": "2026.06.09",
+    "shortDate": "06.09",
+    "cat": "plan",
+    "desc": "페이지를 한 줄도 짜기 전에 정보구조를 먼저 설계했습니다. 기획 공부에서 배운 걸 처음으로 내 프로젝트에 써먹은 기록입니다.",
+    "tags": [
+      "IA",
+      "정보구조",
+      "포트폴리오",
+      "기획공부"
+    ]
+  },
+  {
     "slug": "publisher-to-planner",
     "type": "career",
     "title": "퍼블리셔가 기획자로 이직을 결심한 이유",
