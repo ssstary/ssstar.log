@@ -104,6 +104,56 @@ function initClock() {
   setInterval(tick, 1000);
 }
 
+/* ─── Resizable split panes (Blog/Daily 목록 ↔ 본문) ─── */
+function initPaneResize() {
+  const MIN  = 140;
+  const STEP = 16;
+
+  document.querySelectorAll('.pane-resizer').forEach(handle => {
+    const pane = handle.previousElementSibling;
+    const wrap = handle.parentElement;
+    if (!pane || !wrap) return;
+
+    const setWidth = w => {
+      const max = Math.max(wrap.offsetWidth - MIN - handle.offsetWidth, MIN);
+      pane.style.width = Math.min(Math.max(w, MIN), max) + 'px';
+    };
+
+    let startX, startW;
+
+    const onMove = e => {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      setWidth(startW + (clientX - startX));
+    };
+    const onUp = () => {
+      document.body.classList.remove('pane-resizing');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+    };
+    const onDown = e => {
+      e.preventDefault();
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      startW = pane.offsetWidth;
+      document.body.classList.add('pane-resizing');
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    };
+
+    handle.addEventListener('mousedown', onDown);
+    handle.addEventListener('touchstart', onDown, { passive: false });
+
+    /* 키보드로도 조절 (← →) */
+    handle.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); setWidth(pane.offsetWidth - STEP); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); setWidth(pane.offsetWidth + STEP); }
+    });
+  });
+}
+
 /* ─── Interactive Terminal ─── */
 const TERM_HOST = '<span class="term-prompt">ssstar</span>'
                 + '<span style="color:var(--muted)">@staryos</span>'
@@ -300,6 +350,7 @@ class StaryOS {
     initClock();
     initStars();
     initTerminal();
+    initPaneResize();
     this.boot();
   }
 

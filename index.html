@@ -47,6 +47,12 @@
     <button class="d-icon" data-win="terminal"  aria-label="Terminal 열기">
       <div class="d-icon-img">⚡</div><span>Terminal</span>
     </button>
+    <button class="d-icon" data-win="profile"   aria-label="profile.txt 열기">
+      <div class="d-icon-img">📄</div><span>profile.txt</span>
+    </button>
+    <button class="d-icon" data-win="skills"    aria-label="skills 폴더 열기">
+      <div class="d-icon-img">📁</div><span>skills</span>
+    </button>
   </nav>
 
   <!-- Mobile icon grid -->
@@ -68,6 +74,12 @@
     </div>
     <div class="m-icon" data-win="terminal">
       <div class="m-icon-img">⚡</div><div class="m-icon-label">Terminal</div>
+    </div>
+    <div class="m-icon" data-win="profile">
+      <div class="m-icon-img">📄</div><div class="m-icon-label">profile.txt</div>
+    </div>
+    <div class="m-icon" data-win="skills">
+      <div class="m-icon-img">📁</div><div class="m-icon-label">skills</div>
     </div>
   </div>
 
@@ -93,6 +105,7 @@
           </div>
 
         </div>
+        <div class="pane-resizer" role="separator" aria-orientation="vertical" aria-label="목록 너비 조절" tabindex="0"></div>
         <div class="blog-content" id="blogContent">
           <button class="blog-back" id="blogBack" aria-label="목록으로">← 목록</button>
           <div class="blog-post-inner" id="blogPostInner">
@@ -123,6 +136,7 @@
             <span>💬 일상 · 생각 · 사담</span>
           </div>
         </div>
+        <div class="pane-resizer" role="separator" aria-orientation="vertical" aria-label="목록 너비 조절" tabindex="0"></div>
         <div class="blog-content" id="dailyContent">
           <button class="blog-back" id="dailyBack" aria-label="목록으로">← 목록</button>
           <div class="blog-post-inner" id="dailyPostInner">
@@ -213,6 +227,57 @@
     <div class="win-body">
       <div class="wc-terminal" id="terminalBody">
         <!-- JS로 인터랙티브 터미널 렌더링 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: profile.txt
+  ────────────────────── -->
+  <section class="win" id="win-profile" role="dialog" aria-label="profile.txt">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">📄 profile.txt — TextEdit</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="wc-textfile">
+        <div class="tf-row"><span class="tf-key">Name</span><span class="tf-val">ssstar</span></div>
+        <div class="tf-row"><span class="tf-key">Role</span><span class="tf-val">예비 웹기획자</span></div>
+        <div class="tf-row"><span class="tf-key">BG</span><span class="tf-val">웹 퍼블리셔 출신</span></div>
+        <div class="tf-row"><span class="tf-key">Focus</span><span class="tf-val">UX 기획 / 웹접근성 / IA 설계</span></div>
+        <div class="tf-row"><span class="tf-key">Mail</span><span class="tf-val">yoonssstar@gmail.com</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: skills/
+  ────────────────────── -->
+  <section class="win" id="win-skills" role="dialog" aria-label="skills 폴더">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">📁 skills/ — Finder</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="wc-folder">
+        <div class="folder-item"><div class="folder-icon">📄</div><span>UX흐름설계</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>정보구조(IA)</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>웹접근성</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>WAI-ARIA</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>HTML/CSS</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>JavaScript</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>Figma</span></div>
+        <div class="folder-item"><div class="folder-icon">📄</div><span>Git</span></div>
       </div>
     </div>
   </section>
