@@ -808,6 +808,8 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
   font-size: 13px;
   height: 100%;
   overflow-y: auto;
+  position: relative;
+  cursor: text;
 }
 .wc-terminal::-webkit-scrollbar { width: 4px; }
 .wc-terminal::-webkit-scrollbar-thumb { background: var(--muted2); border-radius: 2px; }
@@ -819,7 +821,25 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
 .term-out    { color: var(--muted); padding-left: 2px; }
 .term-out em { color: var(--accent); font-style: normal; }
 .term-out strong { color: var(--teal); font-weight: normal; }
+.term-out.term-error { color: var(--dot-r); }
 .term-blank  { height: 8px; }
+
+.term-hidden-input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+.term-hidden-input:focus { outline: none; }
 
 .term-cursor {
   display: inline-block;

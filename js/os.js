@@ -104,73 +104,178 @@ function initClock() {
   setInterval(tick, 1000);
 }
 
-/* ─── Terminal typewriter ─── */
-const TERM_SCRIPT = [
-  { type: 'prompt', cmd: 'whoami' },
-  { type: 'out',    text: 'ssstar  —  Web Publisher → Planner' },
-  { type: 'blank' },
-  { type: 'prompt', cmd: 'cat profile.txt' },
-  { type: 'out',    text: 'Name    ssstar' },
-  { type: 'out',    text: 'Role    예비 웹기획자' },
-  { type: 'out',    text: 'BG      웹 퍼블리셔 출신' },
-  { type: 'out',    text: 'Focus   UX 기획 / 웹접근성 / IA 설계' },
-  { type: 'out',    text: 'Mail    yoonssstar@gmail.com' },
-  { type: 'blank' },
-  { type: 'prompt', cmd: 'ls skills/' },
-  { type: 'out',    text: 'UX흐름설계  정보구조(IA)  웹접근성  WAI-ARIA' },
-  { type: 'out',    text: 'HTML/CSS    JavaScript    Figma     Git' },
-  { type: 'blank' },
-  { type: 'cursor' },
-];
+/* ─── Interactive Terminal ─── */
+const TERM_HOST = '<span class="term-prompt">ssstar</span>'
+                + '<span style="color:var(--muted)">@staryos</span>'
+                + '<span style="color:var(--muted)">:~$</span> ';
 
-function runTerminal() {
+const TERM_COMMANDS = {
+  help: [
+    'Available commands:',
+    '  help               명령어 목록 보기',
+    '  whoami             ssstar 소개',
+    '  cat profile.txt    프로필 정보',
+    '  ls skills/         보유 스킬 목록',
+    '  contact            연락처 정보',
+    '  clear              화면 지우기',
+  ],
+  whoami: [
+    'ssstar  —  Web Publisher → Planner',
+  ],
+  'cat profile.txt': [
+    'Name    ssstar',
+    'Role    예비 웹기획자',
+    'BG      웹 퍼블리셔 출신',
+    'Focus   UX 기획 / 웹접근성 / IA 설계',
+    'Mail    yoonssstar@gmail.com',
+  ],
+  'ls skills/': [
+    'UX흐름설계  정보구조(IA)  웹접근성  WAI-ARIA',
+    'HTML/CSS    JavaScript    Figma     Git',
+  ],
+  contact: [
+    'Email     yoonssstar@gmail.com',
+    'GitHub    github.com/ssstar',
+    'LinkedIn  추가 예정',
+  ],
+};
+
+function termAppendCmdLine(history, cmdText) {
+  const div = document.createElement('div');
+  div.className = 'term-line';
+  div.innerHTML = TERM_HOST;
+  const cmdSpan = document.createElement('span');
+  cmdSpan.className = 'term-cmd';
+  cmdSpan.textContent = cmdText;
+  div.appendChild(cmdSpan);
+  history.appendChild(div);
+}
+
+function termAppendOutLine(history, text, isError) {
+  const div = document.createElement('div');
+  div.className = 'term-line';
+  const span = document.createElement('span');
+  span.className = isError ? 'term-out term-error' : 'term-out';
+  span.textContent = text;
+  div.appendChild(span);
+  history.appendChild(div);
+}
+
+function termAppendBlank(history) {
+  const div = document.createElement('div');
+  div.className = 'term-blank';
+  history.appendChild(div);
+}
+
+function termRunCommand(history, raw) {
+  const cmd = raw.trim();
+  termAppendCmdLine(history, cmd);
+  if (cmd === '') return;
+
+  if (cmd === 'clear') {
+    history.innerHTML = '';
+    return;
+  }
+
+  const out = TERM_COMMANDS[cmd];
+  if (out) {
+    out.forEach(line => termAppendOutLine(history, line));
+  } else {
+    termAppendOutLine(history, `command not found: ${cmd} (type 'help')`, true);
+  }
+  termAppendBlank(history);
+}
+
+/* Build the terminal DOM & wire up input (run once) */
+function initTerminal() {
   const body = document.getElementById('terminalBody');
-  if (!body || body.dataset.played === 'true') return;
-  body.dataset.played = 'true';
-  body.innerHTML = '';
-  body.innerHTML = '';
+  if (!body) return;
 
-  let i = 0;
-  const HOST = '<span class="term-prompt">ssstar</span>'
-             + '<span style="color:var(--muted)">@staryos</span>'
-             + '<span style="color:var(--muted)">:~$</span> ';
+  body.innerHTML =
+    `<div class="term-history" id="termHistory" role="log" aria-live="polite"></div>` +
+    `<div class="term-line">${TERM_HOST}<span class="term-cmd" id="termTyped"></span><span class="term-cursor" id="termCursor"></span></div>`;
 
-  function nextLine() {
-    if (i >= TERM_SCRIPT.length) return;
-    const step = TERM_SCRIPT[i++];
-    const div = document.createElement('div');
-    div.className = 'term-line';
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'termInput';
+  input.className = 'term-hidden-input';
+  input.autocomplete = 'off';
+  input.autocapitalize = 'off';
+  input.spellcheck = false;
+  input.setAttribute('aria-label', '터미널 명령 입력');
+  body.appendChild(input);
 
-    if (step.type === 'blank') {
-      div.className = 'term-blank';
-      body.appendChild(div);
-      setTimeout(nextLine, 120);
-    } else if (step.type === 'prompt') {
-      div.innerHTML = HOST + '<span class="term-cmd"></span>';
-      body.appendChild(div);
-      typeCmd(div.querySelector('.term-cmd'), step.cmd, () => {
-        setTimeout(nextLine, 200);
-      });
-    } else if (step.type === 'out') {
-      div.innerHTML = `<span class="term-out">${step.text}</span>`;
-      body.appendChild(div);
+  const history = document.getElementById('termHistory');
+  const typed   = document.getElementById('termTyped');
+
+  let cmdHistory = [];
+  let histIndex  = 0;
+
+  body.addEventListener('click', () => {
+    if (body.dataset.locked !== 'true') input.focus();
+  });
+
+  input.addEventListener('input', () => {
+    typed.textContent = input.value;
+    body.scrollTop = body.scrollHeight;
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const cmd = input.value;
+      termRunCommand(history, cmd);
+      if (cmd.trim() !== '') cmdHistory.push(cmd);
+      histIndex = cmdHistory.length;
+      input.value = '';
+      typed.textContent = '';
       body.scrollTop = body.scrollHeight;
-      setTimeout(nextLine, 80);
-    } else if (step.type === 'cursor') {
-      div.innerHTML = HOST + '<span class="term-cursor"></span>';
-      body.appendChild(div);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (histIndex > 0) {
+        histIndex--;
+        input.value = cmdHistory[histIndex];
+        typed.textContent = input.value;
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      histIndex = Math.min(histIndex + 1, cmdHistory.length);
+      input.value = cmdHistory[histIndex] || '';
+      typed.textContent = input.value;
     }
-  }
+  });
 
-  function typeCmd(el, text, cb) {
-    let j = 0;
-    const id = setInterval(() => {
-      el.textContent += text[j++];
-      if (j >= text.length) { clearInterval(id); cb(); }
-    }, 38);
-  }
+  body._term = { history, typed, input };
+}
 
-  setTimeout(nextLine, 300);
+/* Reset & replay the 'help' intro every time the window opens */
+function openTerminal() {
+  const body = document.getElementById('terminalBody');
+  const term = body && body._term;
+  if (!term) return;
+  const { history, typed, input } = term;
+
+  history.innerHTML = '';
+  typed.textContent = '';
+  input.value = '';
+  body.dataset.locked = 'true';
+
+  const helpCmd = 'help';
+  let i = 0;
+  setTimeout(function typeNext() {
+    if (i < helpCmd.length) {
+      typed.textContent += helpCmd[i++];
+      setTimeout(typeNext, 38);
+    } else {
+      setTimeout(() => {
+        termRunCommand(history, typed.textContent);
+        typed.textContent = '';
+        body.dataset.locked = 'false';
+        body.scrollTop = body.scrollHeight;
+        input.focus();
+      }, 250);
+    }
+  }, 300);
 }
 
 /* ─── OS Window Manager ─── */
@@ -194,6 +299,7 @@ class StaryOS {
     this.initContact();
     initClock();
     initStars();
+    initTerminal();
     this.boot();
   }
 
@@ -267,7 +373,7 @@ class StaryOS {
     this.resetWindow(id);
     this.focus(id);
     this.setTaskbarBtn(id, true);
-    if (id === 'terminal') runTerminal();
+    if (id === 'terminal') openTerminal();
   }
 
   /* ── Reset window state on every open ── */
@@ -278,12 +384,6 @@ class StaryOS {
     /* Scroll to top */
     const body = w.el.querySelector('.win-body');
     if (body) body.scrollTop = 0;
-
-    /* Terminal: clear & allow replay */
-    if (id === 'terminal') {
-      const tb = document.getElementById('terminalBody');
-      if (tb) { tb.innerHTML = ''; tb.dataset.played = 'false'; }
-    }
 
     /* Custom event — future components listen here */
     w.el.dispatchEvent(new CustomEvent('staryos:open', { bubbles: false }));
