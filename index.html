@@ -53,6 +53,9 @@
     <button class="d-icon" data-win="skills"    aria-label="skills 폴더 열기">
       <div class="d-icon-img">📁</div><span>skills</span>
     </button>
+    <button class="d-icon" data-win="resume"    aria-label="resume.pdf 열기">
+      <div class="d-icon-img">📕</div><span>resume.pdf</span>
+    </button>
   </nav>
 
   <!-- Mobile icon grid -->
@@ -80,6 +83,9 @@
     </div>
     <div class="m-icon" data-win="skills">
       <div class="m-icon-img">📁</div><div class="m-icon-label">skills</div>
+    </div>
+    <div class="m-icon" data-win="resume">
+      <div class="m-icon-img">📕</div><div class="m-icon-label">resume.pdf</div>
     </div>
   </div>
 
@@ -278,6 +284,65 @@
         <div class="folder-item"><div class="folder-icon">📄</div><span>JavaScript</span></div>
         <div class="folder-item"><div class="folder-icon">📄</div><span>Figma</span></div>
         <div class="folder-item"><div class="folder-icon">📄</div><span>Git</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: resume.pdf
+  ────────────────────── -->
+  <section class="win" id="win-resume" role="dialog" aria-label="resume.pdf">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">📕 resume.pdf — Preview</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="wc-section">
+        <div class="wc-sec-label">RESUME</div>
+        <div class="wc-headline">ssstar<br><em>웹 퍼블리셔 → 예비 웹기획자</em></div>
+        <div class="wc-info-list">
+          <div class="wc-info-row">
+            <span class="wc-info-key">MAIL</span>
+            <span class="wc-info-val">yoonssstar@gmail.com</span>
+          </div>
+          <div class="wc-info-row">
+            <span class="wc-info-key">GITHUB</span>
+            <span class="wc-info-val"><a href="https://github.com/ssstar" target="_blank" style="color:var(--accent)">github.com/ssstar</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-sec-label">EXPERIENCE</div>
+        <div class="wc-timeline">
+          <div class="tl-item tl-current">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-period">0000.00 ~ 현재</div>
+              <div class="tl-title">웹 퍼블리셔 · 운영담당</div>
+              <div class="tl-desc">BC카드 메인/VIP/기업 등 운영<br>페이북 앱 신규화면 제작</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <div class="tl-period">0000.00 ~ 0000.00</div>
+              <div class="tl-title">웹/앱 운영팀</div>
+              <div class="tl-desc">대규모 서비스 유지·보수<br>부서 간 협업 및 프로세스 개선</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wc-section">
+        <div class="wc-sec-label">SKILLS</div>
+        <p style="font-size:13px;line-height:1.7;color:var(--muted)">
+          UX 흐름설계 · 정보구조(IA) · 웹접근성 · WAI-ARIA<br>
+          HTML/CSS · JavaScript · Figma · Git
+        </p>
       </div>
     </div>
   </section>

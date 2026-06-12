@@ -274,6 +274,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; }
 #win-terminal  { width: 560px; height: 380px; top: 80px;  left: 90px; }
 #win-profile   { width: 420px; height: 320px; top: 110px; left: 160px; }
 #win-skills    { width: 480px; height: 360px; top: 130px; left: 200px; }
+#win-resume    { width: 520px; height: 540px; top: 60px;  left: 240px; }
 
 /* ─── Blog window content ─── */
 .wc-blog-header {

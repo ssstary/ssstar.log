@@ -167,6 +167,7 @@ const TERM_COMMANDS = {
     '  cat profile.txt    프로필 정보',
     '  ls skills/         보유 스킬 목록',
     '  contact            연락처 정보',
+    '  open resume.pdf    이력서 열기',
     '  clear              화면 지우기',
   ],
   whoami: [
@@ -224,6 +225,13 @@ function termRunCommand(history, raw) {
 
   if (cmd === 'clear') {
     history.innerHTML = '';
+    return;
+  }
+
+  if (cmd === 'open resume.pdf') {
+    termAppendOutLine(history, 'Opening resume.pdf ...');
+    termAppendBlank(history);
+    if (window.OS) window.OS.open('resume');
     return;
   }
 
