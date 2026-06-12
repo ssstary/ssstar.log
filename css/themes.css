@@ -71,6 +71,25 @@ html[data-theme="terminal"] .tb-start {
 html[data-theme="terminal"] .tb-start:hover { background: rgba(52, 217, 123, .22); }
 html[data-theme="terminal"] .tb-app.running { background: rgba(52, 217, 123, .08); }
 
+/* Terminal 테마: 아이콘을 그린 모노크롬 + 네온 글로우로 (포스포 모니터 컨셉) */
+html[data-theme="terminal"] .d-icon-img,
+html[data-theme="terminal"] .m-icon-img,
+html[data-theme="terminal"] .tb-app span:first-child {
+  filter: grayscale(1) sepia(1) hue-rotate(85deg) saturate(4) brightness(1.15)
+          drop-shadow(0 0 6px rgba(52, 217, 123, .6));
+}
+html[data-theme="terminal"] .d-icon span,
+html[data-theme="terminal"] .m-icon-label {
+  color: var(--text);
+  text-shadow: 0 0 8px rgba(52, 217, 123, .45);
+}
+
+/* Dawn 테마: 다크용 진한 그림자를 밝은 배경에 맞게 완화 */
+html[data-theme="dawn"] .d-icon-img,
+html[data-theme="dawn"] .m-icon-img {
+  filter: drop-shadow(0 2px 5px rgba(30, 50, 80, .25));
+}
+
 /* ─── 글자 크기 ───
    일반 페이지: body 전체 확대
    StaryOS(index, body.os): 드래그 좌표 계산이 깨지지 않도록
