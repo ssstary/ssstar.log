@@ -22,7 +22,7 @@ html[data-theme="dawn"] {
   --teal-bg:   #d9f3ea;
   --teal-text: #0b7c60;
 }
-html[data-theme="dawn"] nav { background: rgba(255, 255, 255, .95); }
+html[data-theme="dawn"] nav:not(.desktop-icons) { background: rgba(255, 255, 255, .95); }
 html[data-theme="dawn"] .win-header { background: rgba(255, 255, 255, .97); }
 html[data-theme="dawn"] .d-icon span,
 html[data-theme="dawn"] .m-icon-label { text-shadow: 0 1px 4px rgba(255, 255, 255, .9); }
@@ -48,8 +48,13 @@ html[data-theme="terminal"] {
   --teal-bg:   #062a26;
   --teal-text: #4ee0cc;
 }
-html[data-theme="terminal"] nav { background: rgba(4, 14, 9, .97); }
+html[data-theme="terminal"] nav:not(.desktop-icons) { background: rgba(4, 14, 9, .97); }
 html[data-theme="terminal"] .win-header { background: rgba(7, 23, 15, .98); }
+html[data-theme="terminal"] .d-icon:hover { background: rgba(52, 217, 123, .08); }
+html[data-theme="terminal"] .d-icon.sel {
+  background: rgba(52, 217, 123, .14);
+  border-color: rgba(52, 217, 123, .32);
+}
 
 /* ─── 글자 크기 ───
    일반 페이지: body 전체 확대
