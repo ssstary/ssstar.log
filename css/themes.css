@@ -84,10 +84,19 @@ html[data-theme="terminal"] .m-icon-label {
   text-shadow: 0 0 8px rgba(52, 217, 123, .45);
 }
 
-/* Dawn 테마: 다크용 진한 그림자를 밝은 배경에 맞게 완화 */
+/* Stary Night(기본) 테마: 아이콘에 은은한 별빛 글로우 */
+html:not([data-theme]) .d-icon-img,
+html:not([data-theme]) .m-icon-img {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .5))
+          drop-shadow(0 0 10px rgba(79, 156, 240, .38));
+}
+
+/* Dawn 테마: 그림자 완화 + 따뜻한 아침 햇살 글로우 */
 html[data-theme="dawn"] .d-icon-img,
 html[data-theme="dawn"] .m-icon-img {
-  filter: drop-shadow(0 2px 5px rgba(30, 50, 80, .25));
+  filter: brightness(1.03)
+          drop-shadow(0 2px 5px rgba(30, 50, 80, .22))
+          drop-shadow(0 0 9px rgba(255, 185, 110, .4));
 }
 
 /* ─── 글자 크기 ───
