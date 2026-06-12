@@ -1,5 +1,20 @@
 [
   {
+    "slug": "staryos-reverse-planning",
+    "type": "career",
+    "title": "내 포트폴리오를 역기획하다 — StaryOS 화면정의서",
+    "date": "2026.06.12",
+    "shortDate": "06.12",
+    "cat": "plan",
+    "desc": "이미 만든 사이트를 다시 기획서로 풀어봤습니다. 요구사항 정의부터 화면정의서, 정책 정의까지 — 실무 산출물 형식 그대로.",
+    "tags": [
+      "역기획",
+      "화면정의서",
+      "정책정의",
+      "기획공부"
+    ]
+  },
+  {
     "slug": "ai-as-planner-partner",
     "type": "career",
     "title": "AI랑 작업하면서 기획을 배우고 있습니다",

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 포트폴리오를 역기획하다 — StaryOS 화면정의서 — ssstar.log</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/post.css">
+<style>
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 13px;
+}
+.spec-table th {
+  background: var(--bg2);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-align: left;
+  padding: .6rem .9rem;
+  border: 0.5px solid var(--border2);
+}
+.spec-table td {
+  color: var(--muted);
+  padding: .6rem .9rem;
+  border: 0.5px solid var(--border2);
+  line-height: 1.6;
+  vertical-align: top;
+}
+.spec-table td:first-child {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.spec-doc {
+  background: var(--bg2);
+  border: 0.5px solid var(--border2);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.spec-doc-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .06em;
+  margin-bottom: .75rem;
+}
+.spec-doc p {
+  font-size: 13px;
+  margin-bottom: .5rem;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">✦ <em>ssstar</em>.log</a>
+</nav>
+
+<div class="post-wrap">
+  <a class="back-link" href="../posts.html">← 목록으로</a>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span class="cat-badge cat-plan">기획 공부</span>
+      <span class="post-date">2026.06.12</span>
+      <span class="post-read">· 약 6분</span>
+    </div>
+    <h1 class="post-title">내 포트폴리오를 역기획하다 — StaryOS 화면정의서</h1>
+    <p class="post-desc">이미 만든 사이트를 다시 기획서로 풀어봤습니다. 요구사항 정의부터 화면정의서, 정책 정의까지 — 실무 산출물 형식 그대로.</p>
+    <div class="post-tags">
+      <span class="tag">#역기획</span>
+      <span class="tag">#화면정의서</span>
+      <span class="tag">#정책정의</span>
+      <span class="tag">#기획공부</span>
+    </div>
+  </div>
+
+  <div class="post-body">
+
+    <p>이 사이트는 기획서 없이 만들어졌습니다. 아이디어가 떠오르면 바로 구현하고, 어색하면 고치는 식이었습니다.</p>
+    <p>그런데 기획 공부를 하다 보니 궁금해졌습니다. <strong>내가 감으로 내린 결정들을 기획서로 옮기면 어떤 모습일까?</strong> 그래서 거꾸로 해보기로 했습니다. 완성된 사이트를 보고 요구사항 정의서, 화면정의서, 정책 정의를 역으로 작성하는 겁니다.</p>
+
+    <blockquote>역기획은 남의 서비스로만 하는 게 아니었습니다. 내가 만든 것을 역기획하니, 내 판단의 빈틈이 보였습니다.</blockquote>
+
+    <h2>1. 요구사항 정의 — 왜 OS 컨셉인가</h2>
+
+    <div class="spec-doc">
+      <div class="spec-doc-label">PROBLEM STATEMENT</div>
+      <p><strong>문제:</strong> 신입 기획자의 포트폴리오는 구성이 대부분 비슷하다. 채용 담당자의 기억에 남지 않는다.</p>
+      <p><strong>목표:</strong> 사이트를 "읽는" 것이 아니라 "탐색하는" 경험으로 만들어, 머무는 시간과 인상을 모두 높인다.</p>
+      <p><strong>제약:</strong> 정적 호스팅(서버 없음), 1인 제작, 신선함이 사용성을 해치면 안 됨.</p>
+    </div>
+
+    <p>OS 메타포를 고른 근거는 마지막 제약 때문입니다. 아무리 독특해도 사용법을 학습해야 하는 UI는 포트폴리오로서 실격입니다. 그런데 OS 인터페이스는 <strong>누구나 이미 아는 인터랙션 문법</strong>입니다. 아이콘을 더블클릭하면 창이 열리고, 빨간 점을 누르면 닫힙니다. 설명이 필요 없습니다.</p>
+    <p>신선함과 사용성이 보통은 트레이드오프인데, OS 컨셉은 둘을 동시에 잡는 드문 선택지였습니다. 만들 때는 "이게 멋있어서"라고 생각했지만, 역기획하면서 보니 사실 이게 핵심 의사결정이었습니다.</p>
+
+    <h2>2. IA — 콘텐츠를 "앱"으로 분류하기</h2>
+
+    <p>일반 사이트라면 네비게이션 메뉴로 풀 것을, 여기서는 데스크탑 아이콘 → 창으로 풀었습니다. 분류 기준은 콘텐츠의 성격입니다.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>앱(창)</th><th>담는 것</th><th>메타포 선택 이유</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Career.log / Daily.log</td><td>블로그 글 (커리어 / 일상)</td><td>글 목록 + 본문 2-pane → 메일 클라이언트 문법</td></tr>
+        <tr><td>profile.txt</td><td>한 줄 요약 프로필</td><td>가장 가벼운 정보 = 텍스트 파일</td></tr>
+        <tr><td>skills/</td><td>보유 스킬</td><td>병렬 나열 정보 = 폴더 속 파일들</td></tr>
+        <tr><td>resume.pdf</td><td>이력서</td><td>공식 문서 = PDF, 채용 담당자 동선 단축</td></tr>
+        <tr><td>Terminal</td><td>위 전부의 또 다른 입구</td><td>탐색 자체를 놀이로 만드는 장치</td></tr>
+      </tbody>
+    </table>
+
+    <p>같은 정보라도 무게에 따라 다른 "파일 형식"을 입혔습니다. 프로필 요약은 .txt, 공식 이력서는 .pdf. 이용자는 형식만 보고도 클릭 전에 내용의 밀도를 예측할 수 있습니다. 이건 IA에서 배운 <strong>정보 냄새(information scent)</strong>를 OS 메타포로 번역한 것입니다.</p>
+
+    <h2>3. 화면정의서 — Terminal 창</h2>
+
+    <p>대표로 터미널 창 하나를 실무 화면정의서 형식으로 풀어봅니다. 가장 기획 판단이 많이 들어간 화면이기 때문입니다.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>항목</th><th>정의</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>화면 ID</td><td>WIN-TERMINAL</td></tr>
+        <tr><td>진입 경로</td><td>① 데스크탑 ⚡ 아이콘 더블클릭 ② 태스크바 Terminal 버튼</td></tr>
+        <tr><td>초기 상태</td><td>창 오픈 시 'help' 명령이 자동 타이핑 → 명령 목록 출력 후 입력 대기</td></tr>
+        <tr><td>입력</td><td>등록 명령: help / whoami / cat profile.txt / ls skills/ / contact / open resume.pdf / clear</td></tr>
+        <tr><td>예외 처리</td><td>미등록 명령 → "command not found: {입력값} (type 'help')" 에러 라인 출력</td></tr>
+        <tr><td>이력 탐색</td><td>↑/↓ 키로 이전 입력 명령 탐색 (실제 셸 관례 준수)</td></tr>
+      </tbody>
+    </table>
+
+    <p>여기서 자동 타이핑되는 <code>help</code>가 기획적으로 가장 중요한 한 줄입니다. 터미널은 빈 화면이면 뭘 해야 할지 모르는 UI입니다. 그래서 <strong>첫 사용 가이드를 시스템이 직접 시연</strong>하게 했습니다. 온보딩 툴팁을 띄우는 대신, 메타포 안에서 해결한 겁니다.</p>
+
+    <h2>4. 정책 정의 — 감으로 정했지만 사실 정책이었던 것들</h2>
+
+    <h3>단일 정보 원천 정책</h3>
+    <p>터미널의 <code>cat profile.txt</code> 출력과 profile.txt 창의 내용은 항상 일치해야 합니다. <code>ls skills/</code>와 skills 폴더 창도 마찬가지입니다. "진짜 파일 시스템"이라는 환상이 깨지는 순간 컨셉 전체의 설득력이 무너지기 때문입니다. 한쪽을 수정하면 다른 쪽도 반드시 수정한다 — 만들 때는 그냥 그렇게 했는데, 문서로 적고 보니 이건 운영 정책입니다.</p>
+
+    <h3>창 관리 정책</h3>
+    <p>창은 개수 제한 없이 동시에 열 수 있고, 마지막으로 클릭한 창이 항상 맨 앞으로 옵니다(z-index 갱신). 닫기는 상태를 버리고, 최소화는 상태를 유지합니다. 실제 OS의 관례를 그대로 따랐습니다. <strong>메타포를 빌렸으면 그 관례까지 빌려야</strong> 이용자의 기대를 배신하지 않습니다.</p>
+
+    <h3>모바일 분기 정책</h3>
+    <p>모바일에서는 드래그 가능한 창 대신 아이콘 그리드로 전환됩니다. 작은 화면에서 창 드래그는 관례가 아니라 고통입니다. 데스크탑 메타포를 포기하는 게 아니라, <strong>같은 메타포의 모바일 버전(홈 화면 그리드)으로 갈아끼우는</strong> 선택이었습니다.</p>
+
+    <div class="callout">
+      <strong>역기획하며 발견한 빈틈:</strong> 창을 너무 많이 열었을 때의 정책이 없습니다. 지금은 콘텐츠가 적어 문제가 안 되지만, 창이 10개를 넘어가면 태스크바가 넘칩니다. 기획서를 썼다면 처음부터 잡혔을 케이스입니다. 문서화가 왜 필요한지 몸으로 배운 지점입니다.
+    </div>
+
+    <h2>5. 버린 것들</h2>
+    <p>기획서에는 채택안만큼 기각안도 중요하다고 배웠습니다. 이 사이트에서 버린 것들:</p>
+    <p><strong>창 리사이즈 핸들 전면 도입</strong> — 모든 창 모서리에 리사이즈를 넣으려다, Blog/Daily 창의 pane 분할 리사이저만 남기고 버렸습니다. 콘텐츠 양이 고정된 창에서 리사이즈는 쓸 일이 없는 기능이고, 구현 비용 대비 가치가 없었습니다.</p>
+    <p><strong>우클릭 컨텍스트 메뉴</strong> — OS답긴 하지만 모바일에 대응 불가능하고, 담을 메뉴도 마땅치 않았습니다. 메타포의 완성도보다 일관성을 택했습니다.</p>
+
+    <h2>마치며</h2>
+    <p>만들 때는 전부 감이었습니다. 역기획을 하고 나니 그 감들이 전부 이름 붙일 수 있는 기획 판단이었다는 걸 알게 됐습니다. 정보 냄새, 관례 준수, 단일 정보 원천, 기각 사유.</p>
+    <p>다음 프로젝트는 순서를 바꿔보려 합니다. 이번에 역으로 쓴 이 문서들을, 다음엔 정방향으로 먼저 쓰는 겁니다.</p>
+
+  </div>
+</div>
+
+<footer>© 2025 ssstar.log — made with ✦</footer>
+</body>
+</html>
