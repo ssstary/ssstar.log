@@ -1,5 +1,20 @@
 [
   {
+    "slug": "wallet-app-weight",
+    "type": "career",
+    "title": "지갑이 화려할 필요가 있을까",
+    "date": "2026.06.12",
+    "shortDate": "06.12",
+    "cat": "ux",
+    "desc": "결제 앱 운영팀에서 화면을 만지며 체감한 것 — 기능은 하나씩 합리적으로 추가되는데, 앱은 어느새 무거워져 있었습니다.",
+    "tags": [
+      "UX",
+      "결제앱",
+      "운영",
+      "빼는기획"
+    ]
+  },
+  {
     "slug": "staryos-reverse-planning",
     "type": "career",
     "title": "내 포트폴리오를 역기획하다 — StaryOS 화면정의서",
