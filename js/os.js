@@ -154,6 +154,32 @@ function initPaneResize() {
   });
 }
 
+/* ─── Settings panel ─── */
+function initSettingsPanel() {
+  if (!window.StarySettings) return;
+  document.querySelectorAll('.set-opts').forEach(group => {
+    const setting = group.dataset.setting;
+    const opts = group.querySelectorAll('.set-opt');
+
+    const sync = () => {
+      const cur = StarySettings.get(setting);
+      opts.forEach(o => {
+        const on = o.dataset.value === cur;
+        o.classList.toggle('active', on);
+        o.setAttribute('aria-checked', on);
+      });
+    };
+
+    opts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        StarySettings.set(setting, opt.dataset.value);
+        sync();
+      });
+    });
+    sync();
+  });
+}
+
 /* ─── Interactive Terminal ─── */
 const TERM_HOST = '<span class="term-prompt">ssstar</span>'
                 + '<span style="color:var(--muted)">@staryos</span>'
@@ -359,6 +385,7 @@ class StaryOS {
     initStars();
     initTerminal();
     initPaneResize();
+    initSettingsPanel();
     this.boot();
   }
 

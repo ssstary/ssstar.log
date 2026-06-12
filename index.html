@@ -6,8 +6,10 @@
 <title>ssstar.log — StaryOS</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/os.css">
+<link rel="stylesheet" href="css/themes.css">
+<script src="js/theme.js"></script>
 </head>
-<body>
+<body class="os">
 
 <!-- ══════════════════════════
      BOOT SCREEN
@@ -56,6 +58,9 @@
     <button class="d-icon" data-win="resume"    aria-label="resume.pdf 열기">
       <div class="d-icon-img">📕</div><span>resume.pdf</span>
     </button>
+    <button class="d-icon" data-win="settings"  aria-label="설정 열기">
+      <div class="d-icon-img">⚙️</div><span>설정</span>
+    </button>
   </nav>
 
   <!-- Mobile icon grid -->
@@ -86,6 +91,9 @@
     </div>
     <div class="m-icon" data-win="resume">
       <div class="m-icon-img">📕</div><div class="m-icon-label">resume.pdf</div>
+    </div>
+    <div class="m-icon" data-win="settings">
+      <div class="m-icon-img">⚙️</div><div class="m-icon-label">설정</div>
     </div>
   </div>
 
@@ -344,6 +352,49 @@
           HTML/CSS · JavaScript · Figma · Git
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────
+       WIN: 설정
+  ────────────────────── -->
+  <section class="win" id="win-settings" role="dialog" aria-label="설정">
+    <div class="win-header" data-handle>
+      <div class="win-dots">
+        <button class="win-dot dot-close" data-action="close" aria-label="닫기"></button>
+        <button class="win-dot dot-min"   data-action="min"   aria-label="최소화"></button>
+        <button class="win-dot dot-max"   data-action="max"   aria-label="최대화"></button>
+      </div>
+      <div class="win-title">⚙️ 시스템 환경설정</div>
+      <div class="win-spacer"></div>
+    </div>
+    <div class="win-body">
+      <div class="set-group">
+        <div class="set-label">컬러 테마</div>
+        <div class="set-opts" data-setting="theme" role="radiogroup" aria-label="컬러 테마">
+          <button class="set-opt" data-value="default" role="radio">
+            <span class="set-swatch" style="background:linear-gradient(135deg,#060e1c 50%,#4f9cf0 50%)"></span>
+            <span>Stary Night</span>
+          </button>
+          <button class="set-opt" data-value="dawn" role="radio">
+            <span class="set-swatch" style="background:linear-gradient(135deg,#eef2f7 50%,#2f7fd6 50%)"></span>
+            <span>Dawn</span>
+          </button>
+          <button class="set-opt" data-value="terminal" role="radio">
+            <span class="set-swatch" style="background:linear-gradient(135deg,#04100a 50%,#34d97b 50%)"></span>
+            <span>Terminal</span>
+          </button>
+        </div>
+      </div>
+      <div class="set-group">
+        <div class="set-label">글자 크기</div>
+        <div class="set-opts" data-setting="fontsize" role="radiogroup" aria-label="글자 크기">
+          <button class="set-opt" data-value="default" role="radio"><span style="font-size:13px">가</span><span>보통</span></button>
+          <button class="set-opt" data-value="lg"      role="radio"><span style="font-size:15px">가</span><span>크게</span></button>
+          <button class="set-opt" data-value="xl"      role="radio"><span style="font-size:18px">가</span><span>아주 크게</span></button>
+        </div>
+      </div>
+      <p class="set-note">설정은 이 브라우저에 저장되어 다음 방문에도 유지됩니다.</p>
     </div>
   </section>
 
