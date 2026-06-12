@@ -29,6 +29,14 @@ html[data-theme="dawn"] .m-icon-label { text-shadow: 0 1px 4px rgba(255, 255, 25
 html[data-theme="dawn"] .win {
   box-shadow: 0 24px 64px rgba(30, 50, 80, .25), 0 0 0 .5px rgba(10, 30, 60, .06);
 }
+html[data-theme="dawn"] .taskbar { background: rgba(255, 255, 255, .93); }
+html[data-theme="dawn"] .tb-start {
+  background: rgba(47, 127, 214, .12);
+  border-color: rgba(47, 127, 214, .3);
+}
+html[data-theme="dawn"] .tb-start:hover { background: rgba(47, 127, 214, .22); }
+html[data-theme="dawn"] .tb-app:hover { background: rgba(10, 30, 60, .06); }
+html[data-theme="dawn"] .tb-app.running { background: rgba(47, 127, 214, .1); }
 
 /* ─── Theme: Terminal (그린) ─── */
 html[data-theme="terminal"] {
@@ -55,6 +63,13 @@ html[data-theme="terminal"] .d-icon.sel {
   background: rgba(52, 217, 123, .14);
   border-color: rgba(52, 217, 123, .32);
 }
+html[data-theme="terminal"] .taskbar { background: rgba(4, 14, 9, .94); }
+html[data-theme="terminal"] .tb-start {
+  background: rgba(52, 217, 123, .12);
+  border-color: rgba(52, 217, 123, .28);
+}
+html[data-theme="terminal"] .tb-start:hover { background: rgba(52, 217, 123, .22); }
+html[data-theme="terminal"] .tb-app.running { background: rgba(52, 217, 123, .08); }
 
 /* ─── 글자 크기 ───
    일반 페이지: body 전체 확대
