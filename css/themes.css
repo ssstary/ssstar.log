@@ -74,6 +74,7 @@ html[data-theme="terminal"] .tb-app.running { background: rgba(52, 217, 123, .08
 /* Terminal 테마: 아이콘을 그린 모노크롬 + 네온 글로우로 (포스포 모니터 컨셉) */
 html[data-theme="terminal"] .d-icon-img,
 html[data-theme="terminal"] .m-icon-img,
+html[data-theme="terminal"] .wt-icon,
 html[data-theme="terminal"] .tb-app span:first-child {
   filter: grayscale(1) sepia(1) hue-rotate(85deg) saturate(4) brightness(1.15)
           drop-shadow(0 0 6px rgba(52, 217, 123, .6));
@@ -119,6 +120,7 @@ html[data-theme="mono"] .d-icon.sel {
 /* 매트: 아이콘 무채색, 글로우 없이 평면 그림자만 */
 html[data-theme="mono"] .d-icon-img,
 html[data-theme="mono"] .m-icon-img,
+html[data-theme="mono"] .wt-icon,
 html[data-theme="mono"] .tb-app span:first-child {
   filter: grayscale(1) contrast(1.05) drop-shadow(0 2px 3px rgba(0, 0, 0, .6));
 }
