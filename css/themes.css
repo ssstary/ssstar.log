@@ -30,6 +30,7 @@ html[data-theme="dawn"] .win {
   box-shadow: 0 24px 64px rgba(30, 50, 80, .25), 0 0 0 .5px rgba(10, 30, 60, .06);
 }
 html[data-theme="dawn"] .taskbar { background: rgba(255, 255, 255, .93); }
+html[data-theme="dawn"] .wc-terminal { background: #fbfdff; }
 html[data-theme="dawn"] .tb-start {
   background: rgba(47, 127, 214, .12);
   border-color: rgba(47, 127, 214, .3);
@@ -64,6 +65,7 @@ html[data-theme="terminal"] .d-icon.sel {
   border-color: rgba(52, 217, 123, .32);
 }
 html[data-theme="terminal"] .taskbar { background: rgba(4, 14, 9, .94); }
+html[data-theme="terminal"] .wc-terminal { background: #020c07; }
 html[data-theme="terminal"] .tb-start {
   background: rgba(52, 217, 123, .12);
   border-color: rgba(52, 217, 123, .28);
@@ -106,6 +108,7 @@ html[data-theme="mono"] {
 html[data-theme="mono"] nav:not(.desktop-icons) { background: rgba(14, 14, 14, .97); }
 html[data-theme="mono"] .win-header { background: rgba(18, 18, 18, .98); }
 html[data-theme="mono"] .taskbar { background: rgba(10, 10, 10, .95); }
+html[data-theme="mono"] .wc-terminal { background: #050505; }
 html[data-theme="mono"] .tb-start {
   background: rgba(255, 255, 255, .1);
   border-color: rgba(255, 255, 255, .25);
